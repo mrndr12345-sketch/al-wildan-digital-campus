@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AL-WILDAN DIGITAL CAMPUS</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #07182d;
+      color: white;
+    }
+    header {
+      position: absolute;
+      z-index: 2;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      background: rgba(5, 20, 39, .94);
+      border-bottom: 1px solid #244665;
+    }
+    .brand { font-size: 18px; font-weight: bold; letter-spacing: 1px; }
+    .brand span { color: #35d6d0; }
+    .subtitle { font-size: 11px; color: #a9c4dc; margin-top: 5px; }
+    #scene { width: 100vw; height: 100vh; display: block; }
+    .panel {
+      position: absolute;
+      z-index: 2;
+      top: 95px;
+      left: 20px;
+      width: 250px;
+      padding: 18px;
+      border: 1px solid #315574;
+      border-radius: 13px;
+      background: rgba(7, 26, 48, .91);
+      box-shadow: 0 10px 35px #0005;
+    }
+    .panel h3 { margin: 0 0 8px; color: #45ded6; }
+    .panel p { font-size: 12px; line-height: 1.6; color: #c1d4e5; }
+    button, select {
+      width: 100%;
+      margin-top: 8px;
+      padding: 10px;
+      border: 1px solid #3b6688;
+      border-radius: 7px;
+      background: #123654;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background: #17617a; }
+    .controls {
+      position: absolute;
+      right: 20px;
+      bottom: 22px;
+      z-index: 2;
+      width: 155px;
+    }
+    .hint {
+      position: absolute;
+      bottom: 25px;
+      left: 20px;
+      color: #c4d9e9;
+      font-size: 11px;
+      z-index: 2;
+    }
+    @media(max-width:600px) {
+      header { padding: 0 12px; }
+      .brand { font-size: 14px; }
+      .panel { top: 82px; left: 10px; width: 190px; padding: 12px; }
+      .controls { right: 10px; width: 125px; }
+      .hint { bottom: 8px; left: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="brand">AL-WILDAN <span>DIGITAL CAMPUS</span></div>
+    <div class="subtitle">Islamic School 14 · Bumi Mutiara Bogor</div>
+  </div>
+  <div style="font-size:12px;color:#9ec6df">3D CAMPUS</div>
+</header>
+
+<div class="panel">
+  <h3 id="buildingTitle">Digital Campus</h3>
+  <p id="buildingInfo">
+    Selamat datang di visualisasi 3D AL-WILDAN Islamic School 14.
+    Pilih gedung untuk melihat informasi.
+  </p>
+  <select id="floorSelect">
+    <option value="all">Tampilkan semua lantai</option>
+    <option value="1">Lantai 1</option>
+    <option value="2">Lantai 2</option>
+    <option value="3">Lantai 3</option>
+  </select>
+  <button id="resetView">Kembalikan tampilan awal</button>
+</div>
+
+<div class="controls">
+  <button id="rotateButton">Putar otomatis: OFF</button>
+  <button id="zoomIn">Perbesar +</button>
+  <button id="zoomOut">Perkecil −</button>
+</div>
+
+<div class="hint">Geser mouse untuk memutar · Scroll untuk zoom · Klik gedung untuk memilih</div>
+<div id="scene"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const container = document.getElementById("scene");
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x9bc5df);
+scene.fog = new THREE.Fog(0x9bc5df, 45, 100);
+
+const camera = new THREE.PerspectiveCamera(
+  38, window.innerWidth / window.innerHeight, 0.1, 200
+);
+camera.position.set(19, 17, 22);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+container.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.target.set(0, 2, 0);
+controls.maxPolarAngle = Math.PI / 2.05;
+controls.minDistance = 9;
+controls.maxDistance = 42;
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0x536477, 2));
+
+const sunlight = new THREE.DirectionalLight(0xffffff, 2.5);
+sunlight.position.set(-12, 24, 15);
+sunlight.castShadow = true;
+scene.add(sunlight);
+
+// Material
+const groundMat = new THREE.MeshStandardMaterial({color:0x789b70});
+const wallMat = new THREE.MeshStandardMaterial({color:0xf1e9d9});
+const roofMat = new THREE.MeshStandardMaterial({color:0x913f32});
+const windowMat = new THREE.MeshStandardMaterial({
+  color:0x75bfd0, metalness:0.15, roughness:0.25
+});
+const trimMat = new THREE.MeshStandardMaterial({color:0x9d3430});
+const courtMat = new THREE.MeshStandardMaterial({color:0x248c9c});
+const pathMat = new THREE.MeshStandardMaterial({color:0xc9c3ad});
+
+// Helper
+function box(parent, x,y,z, sx,sy,sz, material, name="") {
+  const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(sx,sy,sz), material
+  );
+  mesh.position.set(x,y,z);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  mesh.userData.building = name;
+  parent.add(mesh);
+  return mesh;
+}
+
+// Campus ground
+box(scene, 0,-0.35,0, 35,0.5,28, groundMat);
+box(scene, 0,-0.07,10, 28,0.12,5, pathMat);
+
+// Entrance yard
+box(scene,0,-0.05,11,13,0.12,5,
+  new THREE.MeshStandardMaterial({color:0xb9b9ae}));
+
+// Basketball / activity court
+box(scene,0,0.02,0,9,0.15,6,courtMat);
+const lineMat = new THREE.MeshStandardMaterial({color:0xffffff});
+box(scene,0,0.11,-3,0.08,0.02,0.3,lineMat);
+box(scene,0,0.11,3,0.08,0.02,0.3,lineMat);
+box(scene,-4.4,0.11,0,0.08,0.02,6,lineMat);
+box(scene,4.4,0.11,0,0.08,0.02,6,lineMat);
+
+// Building groups: B left, A center, C right
+const buildings = [];
+
+function createBuilding(name, x, z) {
+  const group = new THREE.Group();
+  group.position.set(x,0,z);
+  group.userData.buildingName = name;
+  scene.add(group);
+
+  // Three storeys
+  const floors = [];
+  for(let floor=1; floor<=3; floor++) {
+    const floorGroup = new THREE.Group();
+    const y = (floor-1)*2.25;
+
+    box(floorGroup,0,y+1.05,0,6,2.1,5,wallMat,name);
+
+    // Red horizontal facade accents
+    box(floorGroup,0,y+0.08,2.53,6.1,0.16,0.12,trimMat,name);
+    box(floorGroup,0,y+2.08,2.53,6.1,0.12,0.12,trimMat,name);
+
+    // Front windows
+    for(let i=0;i<4;i++) {
+      box(floorGroup,-2.1+i*1.4,y+1.15,2.57,
+        0.8,0.85,0.08,windowMat,name);
+    }
+
+    // Side windows
+    for(let i=0;i<3;i++) {
+      box(floorGroup,3.05,y+1.15,-1.5+i*1.5,
+        0.08,0.85,0.8,windowMat,name);
+    }
+
+    group.add(floorGroup);
+    floors.push(floorGroup);
+  }
+
+  // Roof
+  const roof = new THREE.Mesh(
+    new THREE.BoxGeometry(6.5,0.3,5.5),roofMat
+  );
+  roof.position.y = 6.85;
+  roof.castShadow = true;
+  roof.userData.building = name;
+  group.add(roof);
+
+  // Entrance canopy
+  box(group,0,0.25,2.95,2.1,0.2,1.0,trimMat,name);
+
+  // Building name marker
+  const marker = new THREE.Group();
+  marker.position.set(0,7.5,0);
+  group.add(marker);
+
+  buildings.push({name,group,floors});
+}
+
+// Position sesuai pembagian yang disepakati
+createBuilding("GEDUNG B",-8,-8);
+createBuilding("GEDUNG A",0,-8);
+createBuilding("GEDUNG C",8,-8);
+
+// Mosque marker / dome
+const mosque = new THREE.Group();
+mosque.position.set(-10,0,1);
+scene.add(mosque);
+box(mosque,0,1,0,3,2,3,wallMat);
+const dome = new THREE.Mesh(
+  new THREE.SphereGeometry(1.1,24,16,0,Math.PI*2,0,Math.PI/2),
+  new THREE.MeshStandardMaterial({color:0x238d91})
+);
+dome.position.y = 2;
+mosque.add(dome);
+box(mosque,0,2.1,0,0.12,0.3,0.12,roofMat);
+
+// Trees
+function createTree(x,z) {
+  const trunk = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.15,0.2,1,8),
+    new THREE.MeshStandardMaterial({color:0x765035})
+  );
+  trunk.position.set(x,0.5,z);
+  scene.add(trunk);
+
+  const leaves = new THREE.Mesh(
+    new THREE.SphereGeometry(0.8,12,10),
+    new THREE.MeshStandardMaterial({color:0x397b48})
+  );
+  leaves.position.set(x,1.5,z);
+  leaves.castShadow = true;
+  scene.add(leaves);
+}
+[[-14,-11],[-14,5],[14,-11],[14,5],[-14,10],[14,10]]
+.forEach(p=>createTree(p[0],p[1]));
+
+// Interaction
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+let selected = null;
+let autoRotate = false;
+
+renderer.domElement.addEventListener("click", event => {
+  const rect = renderer.domElement.getBoundingClientRect();
+  pointer.x = ((event.clientX-rect.left)/rect.width)*2-1;
+  pointer.y = -((event.clientY-rect.top)/rect.height)*2+1;
+  raycaster.setFromCamera(pointer,camera);
+
+  const hits = raycaster.intersectObjects(scene.children,true);
+  let found = null;
+  for(const hit of hits) {
+    let obj = hit.object;
+    while(obj && !obj.userData.building && !obj.userData.buildingName) {
+      obj = obj.parent;
+    }
+    if(obj?.userData.buildingName) {
+      found = obj;
+      break;
+    }
+    if(obj?.userData.building) {
+      found = buildings.find(b=>b.name===obj.userData.building)?.group;
+      break;
+    }
+  }
+
+  if(found) {
+    selected = buildings.find(b=>b.group===found);
+    document.getElementById("buildingTitle").textContent=selected.name;
+    document.getElementById("buildingInfo").textContent=
+      selected.name+" memiliki tiga lantai. Detail ruangan akan ditambahkan berdasarkan denah sekolah.";
+  }
+});
+
+document.getElementById("floorSelect").addEventListener("change",e=>{
+  const value=e.target.value;
+  buildings.forEach(b=>{
+    b.floors.forEach((floor,i)=>{
+      floor.visible = value==="all" || Number(value)===i+1;
+    });
+    // Atap disembunyikan saat melihat lantai tertentu
+    b.group.children[b.group.children.length-1].visible = value==="all";
+  });
+});
+
+document.getElementById("resetView").onclick=()=>{
+  controls.target.set(0,2,0);
+  camera.position.set(19,17,22);
+  controls.update();
+  document.getElementById("floorSelect").value="all";
+  buildings.forEach(b=>{
+    b.floors.forEach(f=>f.visible=true);
+    b.group.children[b.group.children.length-1].visible=true;
+  });
+  document.getElementById("buildingTitle").textContent="Digital Campus";
+  document.getElementById("buildingInfo").textContent=
+    "Selamat datang di visualisasi 3D AL-WILDAN Islamic School 14.";
+};
+
+document.getElementById("rotateButton").onclick=()=>{
+  autoRotate=!autoRotate;
+  document.getElementById("rotateButton").textContent=
+    "Putar otomatis: "+(autoRotate?"ON":"OFF");
+};
+
+document.getElementById("zoomIn").onclick=()=>{
+  camera.position.multiplyScalar(0.88);
+};
+document.getElementById("zoomOut").onclick=()=>{
+  camera.position.multiplyScalar(1.12);
+};
+
+function animate() {
+  requestAnimationFrame(animate);
+  if(autoRotate) {
+    const offset=camera.position.clone().sub(controls.target);
+    offset.applyAxisAngle(new THREE.Vector3(0,1,0),0.003);
+    camera.position.copy(controls.target).add(offset);
+  }
+  controls.update();
+  renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener("resize",()=>{
+  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,window.innerHeight);
+});
+</script>
+</body>
+</html>
