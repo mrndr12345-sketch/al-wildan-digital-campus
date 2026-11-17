@@ -1,253 +1,157 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AL-WILDAN 14 DIGITAL CAMPUS — Lantai 1</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AL-WILDAN 14 DIGITAL CAMPUS</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;overflow:hidden;background:#07182d;color:#fff;font-family:Arial,sans-serif}
-#scene{position:fixed;inset:0}
-header{position:fixed;z-index:5;top:0;left:0;right:0;height:68px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,20,39,.94);border-bottom:1px solid #244665}
-.brand{font-weight:800;letter-spacing:.7px;font-size:19px}.brand span{color:#35d6d0}
-.subtitle{font-size:11px;color:#a9c4dc;margin-top:4px}
-.panel{position:fixed;z-index:5;top:84px;left:16px;width:265px;padding:15px;border:1px solid #315574;border-radius:13px;background:rgba(7,26,48,.94);box-shadow:0 10px 35px #0005;max-height:calc(100vh - 110px);overflow:auto}
-.panel h3{margin:0 0 7px;color:#45ded6;font-size:16px}
-.panel p{font-size:12px;line-height:1.5;color:#c1d4e5;margin:6px 0 10px}
-button,select{width:100%;margin-top:7px;padding:10px;border:1px solid #3b6688;border-radius:7px;background:#123654;color:white;cursor:pointer;font-size:12px}
-button:hover{background:#17617a}
-.legend{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0;font-size:11px;color:#d7e7f3}
-.dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
-.controls{position:fixed;z-index:5;right:16px;bottom:18px;width:150px}
-.hint{position:fixed;z-index:4;left:18px;bottom:16px;font-size:11px;color:#e0edf6;text-shadow:0 1px 3px #345}
-@media(max-width:650px){header{height:58px;padding:0 12px}.brand{font-size:14px}.subtitle{font-size:9px}.panel{top:68px;left:8px;width:190px;padding:10px}.panel p{font-size:11px}.controls{right:8px;bottom:8px;width:120px}.hint{left:8px;bottom:8px;max-width:54%;font-size:10px}}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:#07182d;color:#fff}
+#scene{position:fixed;inset:0}header{position:fixed;z-index:5;top:0;left:0;right:0;height:68px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,20,39,.95);border-bottom:1px solid #244665}
+.brand{font-weight:800;font-size:19px;letter-spacing:.7px}.brand span{color:#35d6d0}.subtitle{font-size:11px;color:#a9c4dc;margin-top:4px}
+.panel{position:fixed;z-index:5;top:84px;left:16px;width:280px;max-height:calc(100vh - 105px);overflow:auto;padding:15px;border:1px solid #315574;border-radius:13px;background:rgba(7,26,48,.95);box-shadow:0 10px 35px #0005}
+.panel h3{margin:0 0 7px;color:#45ded6;font-size:16px}.panel p{font-size:12px;line-height:1.5;color:#c1d4e5;margin:6px 0 10px}
+button,select{width:100%;margin-top:7px;padding:10px;border:1px solid #3b6688;border-radius:7px;background:#123654;color:white;cursor:pointer;font-size:12px}button:hover{background:#17617a}
+.row{display:flex;gap:6px}.row button{flex:1}.meta{font-size:11px;color:#9fb8ca;margin-top:8px}.status{font-size:11px;color:#9ee6c0;margin-top:7px}
+.controls{position:fixed;z-index:5;right:16px;bottom:16px;width:145px}.hint{position:fixed;z-index:4;left:16px;bottom:14px;font-size:11px;color:#e0edf6;text-shadow:0 1px 3px #345}
+#activityList{margin:8px 0 0;padding:0;list-style:none}#activityList li{padding:7px 0;border-top:1px solid #315574;font-size:11px;line-height:1.4;color:#d7e7f3}
+@media(max-width:650px){header{height:58px;padding:0 10px}.brand{font-size:14px}.subtitle{font-size:9px}.panel{top:68px;left:8px;width:190px;padding:10px}.panel p{font-size:11px}.controls{right:8px;bottom:8px;width:118px}.hint{left:8px;bottom:8px;max-width:52%;font-size:10px}}
 </style>
 </head>
 <body>
 <div id="scene"></div>
-<header><div><div class="brand">AL-WILDAN 14 <span>DIGITAL CAMPUS</span></div><div class="subtitle">Bumi Mutiara · Model Interior 3D Lantai 1</div></div><div style="font-size:11px;color:#9ec6df">3D CAMPUS</div></header>
-<div class="panel">
- <h3 id="roomTitle">Denah Lantai 1</h3>
- <p id="roomInfo">Pilih salah satu ruang pada model 3D untuk melihat namanya. Denah mengikuti gambar lantai 1 yang diberikan.</p>
- <div class="legend">
-  <div><i class="dot" style="background:#77b9f2"></i>Ruang kelas</div>
-  <div><i class="dot" style="background:#20c94a"></i>Fasilitas</div>
-  <div><i class="dot" style="background:#f5b942"></i>Tangga</div>
-  <div><i class="dot" style="background:#aeb8c3"></i>Toilet</div>
- </div>
- <button id="roofBtn">Sembunyikan atap: OFF</button>
- <button id="labelsBtn">Label ruang: ON</button>
- <select id="viewMode">
-  <option value="perspective">Sudut perspektif</option>
-  <option value="top">Tampak atas</option>
- </select>
- <button id="resetBtn">Kembalikan tampilan awal</button>
-</div>
-<div class="controls">
- <button id="rotateBtn">Putar otomatis: OFF</button>
- <button id="zoomIn">Perbesar +</button>
- <button id="zoomOut">Perkecil −</button>
-</div>
-<div class="hint">Geser untuk memutar · Scroll untuk zoom · Klik ruang untuk memilih</div>
-<script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}
-</script>
+<header><div><div class="brand">AL-WILDAN 14 <span>DIGITAL CAMPUS</span></div><div class="subtitle">Bumi Mutiara · Kampus 3 lantai interaktif</div></div><div style="font-size:11px;color:#9ec6df">3D CAMPUS</div></header>
+<aside class="panel">
+ <h3 id="title">AL-WILDAN DIGITAL CAMPUS</h3>
+ <p id="description">Pilih lantai, lalu klik ruang pada model 3D untuk melihat informasi dan kegiatan.</p>
+ <label class="meta" for="floorSelect">PILIH LANTAI</label>
+ <select id="floorSelect"><option value="all">Seluruh lantai</option><option value="1">Lantai 1</option><option value="2">Lantai 2</option><option value="3">Lantai 3</option></select>
+ <div class="row"><button id="roofBtn">Atap: tampil</button><button id="labelsBtn">Label: ON</button></div>
+ <button id="topBtn">Tampak atas / perspektif</button>
+ <div class="meta">INFORMASI KEGIATAN</div>
+ <div id="activityStatus" class="status">Menunggu koneksi data kegiatan…</div>
+ <ul id="activityList"><li>Pilih ruang untuk melihat jadwal kegiatan yang tersedia.</li></ul>
+ <button id="resetBtn">Reset tampilan</button>
+</aside>
+<div class="controls"><button id="rotateBtn">Putar otomatis: OFF</button><button id="zoomIn">Perbesar +</button><button id="zoomOut">Perkecil −</button></div>
+<div class="hint">Geser untuk memutar · Scroll untuk zoom · Klik ruang untuk detail</div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
 <script type="module">
 import * as THREE from "three";
 import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 
-const scene=new THREE.Scene();
-scene.background=new THREE.Color(0x9bc5df);
-scene.fog=new THREE.Fog(0x9bc5df,55,115);
-const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,200);
-const renderer=new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(innerWidth,innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-renderer.shadowMap.enabled=true;
-renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-renderer.outputColorSpace=THREE.SRGBColorSpace;
-document.getElementById("scene").appendChild(renderer.domElement);
-const controls=new OrbitControls(camera,renderer.domElement);
-controls.enableDamping=true; controls.target.set(0,0,0); controls.maxPolarAngle=Math.PI/2.03;
-camera.position.set(27,29,35);
+/* ==========================================================
+   KONFIGURASI DATA
+   URL Apps Script yang sudah diuji pada tahap backend.
+   Jika deployment berubah, ganti URL ini saja.
+========================================================== */
+const API_URL="https://script.google.com/macros/s/AKfycbwiXZXrnHIXSUWMocOR1_25CXPRRFGHX_4tyj4CZs5ZxM46NzBnUO81Re7ui2JBolcYxg/exec";
 
-scene.add(new THREE.HemisphereLight(0xffffff,0x607080,2.1));
-const sun=new THREE.DirectionalLight(0xffffff,2.4);sun.position.set(-18,35,22);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);scene.add(sun);
-
-const mats={
- ground:new THREE.MeshStandardMaterial({color:0x839b7b}),
- floor:new THREE.MeshStandardMaterial({color:0xe9e5dc}),
- wall:new THREE.MeshStandardMaterial({color:0xf0eee7}),
- roof:new THREE.MeshStandardMaterial({color:0x425a70,transparent:true,opacity:.88}),
- class:new THREE.MeshStandardMaterial({color:0x78b8f0}),
- green:new THREE.MeshStandardMaterial({color:0x19c944}),
- stair:new THREE.MeshStandardMaterial({color:0xf4b63e}),
- toilet:new THREE.MeshStandardMaterial({color:0xb7c0c8}),
- court:new THREE.MeshStandardMaterial({color:0x11c936}),
- line:new THREE.MeshStandardMaterial({color:0xffffff}),
- lobby:new THREE.MeshStandardMaterial({color:0xc9d2d6}),
- trim:new THREE.MeshStandardMaterial({color:0x315574})
+/* Denah disusun sebagai koordinat relatif dari gambar sumber.
+   Koordinat tiap lantai dinormalisasi agar footprint bertumpuk.
+   Detail ukuran teknis masih perlu verifikasi lapangan. */
+const roomData={
+1:[
+["Mushola Ikhwan",85,350,236,501,"facility"],["Toilet sisi kiri",15,437,86,567,"toilet"],["Tangga kiri",86,501,173,552,"stair"],
+["Lab Komputer",15,592,91,662,"facility"],["Kelas 9 AE 1",96,592,167,662,"class"],["Kelas 12 DI 1",168,592,238,662,"class"],
+["Lab IPA",258,309,328,350,"facility"],["Kelas 3 INTER 1",258,350,328,421,"class"],["Kelas 2 INTER 2",328,350,398,421,"class"],["Kelas 2 INTER 1",398,350,470,421,"class"],["Kelas 1 INTER 1",470,350,543,421,"class"],["Tangga atas",543,350,589,421,"stair"],["Toilet atas",589,350,659,421,"toilet"],
+["Kelas 3 INTER 3",783,309,854,369,"class"],["Kelas 3 INTER 4",854,309,925,369,"class"],["Kantin",920,374,1008,475,"facility"],["Mushola Akhwat",920,475,1008,704,"facility"],
+["Ruang PPDB",679,490,750,563,"facility"],["Kelas 2 INTER 4",750,490,821,563,"class"],["Ruang Manajemen",821,490,870,543,"facility"],["Ruang Finance",870,490,920,543,"facility"],["Toilet kanan",870,543,920,578,"toilet"],["Tangga kanan",832,578,922,609,"stair"],
+["Kelas 1 INTER 2",679,609,750,680,"class"],["Kelas 2 INTER 3",750,609,821,680,"class"],["Kelas 4 INTER 3",821,609,891,680,"class"],
+["Lobi Sekolah",238,662,704,955,"lobby"],["Pos Security",575,885,647,955,"facility"],["Lapangan utama",258,421,659,646,"court"],["Lapangan kecil",679,369,888,475,"court"]
+],
+2:[
+["Ruang Administrasi",29,477,105,565,"facility"],["Tangga kiri lantai 2",29,565,105,626,"stair"],["Kelas 6 INTER 2",116,477,205,565,"class"],["Kelas 10 DI 1",29,675,117,763,"class"],["Kelas 11 DI 1",117,675,205,763,"class"],
+["Kelas 5 INTER 1",228,364,315,438,"class"],["Kelas 4 INTER 2",315,364,403,438,"class"],["Kelas 4 INTER 1",403,364,490,438,"class"],["Kelas 3 INTER 2",490,364,578,438,"class"],["Tangga atas lantai 2",578,364,639,438,"stair"],["Toilet atas lantai 2",639,364,727,438,"toilet"],
+["Perpustakaan",684,509,772,744,"facility"],["Kelas 7 AE 2",772,509,860,598,"class"],["Kelas 8 AE 2",860,509,947,598,"class"],["UKS lantai 2",947,509,1007,574,"facility"],["Toilet kanan lantai 2",1007,509,1070,615,"toilet"],["Tangga kanan lantai 2",960,615,1070,657,"stair"],
+["Kelas 6 INTER 3",772,657,860,744,"class"],["Kelas 5 INTER 2",860,657,947,744,"class"],["Kelas 4 INTER 4",947,657,1035,744,"class"]
+],
+3:[
+["UKS lantai 3",29,419,120,526,"facility"],["Tangga kiri lantai 3",29,526,120,600,"stair"],["Toilet kiri lantai 3",29,600,81,658,"toilet"],["Kelas 8 AE 1",29,658,135,763,"class"],["Kelas 7 AE 1",135,658,240,763,"class"],["Kelas 6 INTER 1",134,419,240,526,"class"],
+["Ruang Penjurusan",610,460,715,741,"facility"],["Kelas 11 DI 2",715,460,820,566,"class"],["Kelas 12 DI 2",820,460,924,566,"class"],["Ruang Penj.",924,460,997,535,"facility"],["Toilet kanan lantai 3",997,460,1070,585,"toilet"],["Tangga kanan lantai 3",940,585,1070,635,"stair"],["Kelas 10 DI 2",715,635,820,741,"class"],["Kelas 9 AE 3",820,635,924,741,"class"],["Kelas 9 AE 2",924,635,1029,741,"class"]
+]
 };
-const root=new THREE.Group();scene.add(root);
-const SCALE=.035;
-const X=p=>(p-512)*SCALE;
-const Z=p=>(p-630)*SCALE;
-const W=(a,b)=>(b-a)*SCALE;
-const roomMeshes=[],roofMeshes=[],labelSprites=[];
-const campusW=W(15,1008),campusD=W(309,956);
-function addBox(parent,x,y,z,sx,sy,sz,mat,name){
- const m=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),mat);
- m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;
- if(name)m.userData.roomName=name;
- parent.add(m);return m;
+
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x9bc5df);scene.fog=new THREE.Fog(0x9bc5df,65,135);
+const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,250);camera.position.set(27,27,32);
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;document.getElementById("scene").appendChild(renderer.domElement);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.target.set(0,3.5,0);controls.maxPolarAngle=Math.PI/2.02;controls.minDistance=9;controls.maxDistance=85;
+scene.add(new THREE.HemisphereLight(0xffffff,0x596b78,2.0));const sun=new THREE.DirectionalLight(0xffffff,2.5);sun.position.set(-18,35,22);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);scene.add(sun);
+const materials={
+ground:new THREE.MeshStandardMaterial({color:0x789b70}),class:new THREE.MeshStandardMaterial({color:0x82baf0}),facility:new THREE.MeshStandardMaterial({color:0x28cf58}),toilet:new THREE.MeshStandardMaterial({color:0xb8c2ca}),stair:new THREE.MeshStandardMaterial({color:0xf2b43f}),lobby:new THREE.MeshStandardMaterial({color:0xc9d1d4}),court:new THREE.MeshStandardMaterial({color:0x14bd3b}),wall:new THREE.MeshStandardMaterial({color:0xf0eee7}),roof:new THREE.MeshStandardMaterial({color:0x40576b,transparent:true,opacity:.88}),line:new THREE.MeshStandardMaterial({color:0xffffff})
+};
+const campus=new THREE.Group();scene.add(campus);const clickable=[],roofObjects=[],floorGroups={},labels=[];
+const SCALE=.035, CENTER_X=549,CENTER_Y=632, FLOOR_H=3.35;
+const pxX=v=>(v-CENTER_X)*SCALE,pxZ=v=>(v-CENTER_Y)*SCALE;
+function makeLabel(text,x,y,z){
+ const c=document.createElement("canvas");c.width=768;c.height=192;
+ const ctx=c.getContext("2d");
+ ctx.fillStyle="rgba(7,27,48,.96)";ctx.strokeStyle="#42d6cf";ctx.lineWidth=7;
+ ctx.roundRect(8,8,752,176,24);ctx.fill();ctx.stroke();
+ ctx.fillStyle="#ffffff";ctx.textAlign="center";ctx.textBaseline="middle";
+ const words=text.split(" ");
+ if(text.length>19){
+   let line1="",line2="";
+   const cut=Math.ceil(words.length/2);
+   line1=words.slice(0,cut).join(" ");line2=words.slice(cut).join(" ");
+   ctx.font="bold 43px Arial";ctx.fillText(line1,384,73);ctx.fillText(line2,384,127);
+ } else {
+   ctx.font="bold 46px Arial";ctx.fillText(text,384,98);
+ }
+ const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;
+ const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:false,depthTest:true,depthWrite:true}));
+ s.position.set(x,y,z);s.scale.set(Math.max(2.0,Math.min(4.6,text.length*.105)),1.05,1);
+ campus.add(s);labels.push(s);return s;
 }
-function textSprite(text,x,z,color="#183247"){
- const canvas=document.createElement("canvas");canvas.width=512;canvas.height=128;
- const ctx=canvas.getContext("2d");ctx.clearRect(0,0,512,128);
- ctx.fillStyle="rgba(255,255,255,.88)";ctx.strokeStyle="rgba(20,50,70,.35)";ctx.lineWidth=4;
- ctx.roundRect(8,8,496,112,16);ctx.fill();ctx.stroke();
- ctx.fillStyle=color;ctx.font="bold 34px Arial";ctx.textAlign="center";ctx.textBaseline="middle";
- const words=text.length>22?text.split(" "):[text];
- if(words.length>1){ctx.font="bold 27px Arial";ctx.fillText(words.slice(0,Math.ceil(words.length/2)).join(" "),256,48);ctx.fillText(words.slice(Math.ceil(words.length/2)).join(" "),256,82)}
- else ctx.fillText(text,256,64);
- const tex=new THREE.CanvasTexture(canvas);tex.colorSpace=THREE.SRGBColorSpace;
- const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
- s.position.set(x,2.35,z);s.scale.set(Math.max(1.35,Math.min(3.3,text.length*.075)),.62,1);
- root.add(s);labelSprites.push(s);return s;
+function box(parent,x,y,z,sx,sy,sz,mat,name){const m=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;if(name)m.userData.roomName=name;parent.add(m);return m}
+function makeRoom(g,floor,name,x1,z1,x2,z2,type){
+ const cx=pxX((x1+x2)/2),cz=pxZ((z1+z2)/2),w=(x2-x1)*SCALE,d=(z2-z1)*SCALE,y=(floor-1)*FLOOR_H;
+ const base=box(g,cx,y+.12,cz,w,.24,d,materials[type]||materials.class,name);clickable.push(base);
+ const wallH=1.55,t=.10;
+ box(g,cx,y+.24+wallH/2,cz-d/2,w,wallH,t,materials.wall);
+ box(g,cx-w/2,y+.24+wallH/2,cz,t,wallH,d,materials.wall);
+ box(g,cx+w/2,y+.24+wallH/2,cz,t,wallH,d,materials.wall);
+ // Front wall with a central doorway opening
+ const gap=Math.min(1.0,w*.28),side=(w-gap)/2;
+ if(side>.08){box(g,cx-(gap+side)/2,y+.24+wallH/2,cz+d/2,side,wallH,t,materials.wall);box(g,cx+(gap+side)/2,y+.24+wallH/2,cz+d/2,side,wallH,t,materials.wall)}
+ const roof=box(g,cx,y+2.02,cz,w+.10,.12,d+.10,materials.roof,name);roofObjects.push(roof);
+ makeLabel(name,cx,y+2.25,cz);
 }
-function room(name,x1,y1,x2,y2,type="class",opts={}){
- // coordinates refer to original drawing; y increases toward front/gate
- const cx=X((x1+x2)/2),cz=Z((y1+y2)/2),sx=W(x1,x2),sz=W(y1,y2);
- const mat=mats[type]||mats.class;
- const floor=addBox(root,cx,.10,cz,sx,.20,sz,mat,name);
- floor.userData.roomName=name;roomMeshes.push(floor);
- const h=opts.wallHeight||1.65,t=.12;
- // perimeter walls, with a doorway gap on the front edge for most rooms
- addBox(root,cx,h/2+.18,cz-sz/2,sx,h,t,mats.wall,name);
- addBox(root,cx-sx/2,h/2+.18,cz,t,h,sz,mats.wall,name);
- addBox(root,cx+sx/2,h/2+.18,cz,t,h,sz,mats.wall,name);
- if(opts.openBack){
-  addBox(root,cx-sx*.30,h/2+.18,cz+sz/2,sx*.40,h,t,mats.wall,name);
-  addBox(root,cx+sx*.30,h/2+.18,cz+sz/2,sx*.40,h,t,mats.wall,name);
- }else addBox(root,cx,h/2+.18,cz+sz/2,sx,h,t,mats.wall,name);
- const roof=addBox(root,cx,2.05,cz,sx+.10,.13,sz+.10,mats.roof,name);
- roofMeshes.push(roof);
- textSprite(name,cx,cz);
- return {cx,cz,sx,sz};
+function addCourt(floor,name,x1,z1,x2,z2){const y=(floor-1)*FLOOR_H;const cx=pxX((x1+x2)/2),cz=pxZ((z1+z2)/2),w=(x2-x1)*SCALE,d=(z2-z1)*SCALE;const m=box(floorGroups[floor],cx,y+.12,cz,w,.24,d,materials.court,name);clickable.push(m);makeLabel(name,cx,y+.65,cz)}
+// Overall site pad
+box(campus,0,-.28,0,39,.45,27,materials.ground);
+for(let f=1;f<=3;f++){floorGroups[f]=new THREE.Group();campus.add(floorGroups[f]);for(const r of roomData[f]){if(r[5]==="court"){addCourt(f,r[0],r[1],r[2],r[3],r[4]);continue}makeRoom(floorGroups[f],f,r[0],r[1],r[2],r[3],r[4],r[5])}}
+/* Pelat lantai transparan dihapus agar tidak membentuk bidang putih bertumpuk.
+   Lantai ruang tetap dibentuk oleh permukaan masing-masing ruang. */
+function updateFloors(v){
+ for(let f=1;f<=3;f++)floorGroups[f].visible=(v==="all"||Number(v)===f);
+ roofObjects.forEach(o=>{
+   const ownerFloor=Math.round((o.position.y-2.02)/FLOOR_H)+1;
+   o.visible=roofVisible&&(v==="all"||ownerFloor===Number(v));
+ });
+ labels.forEach(label=>{
+   const ownerFloor=Math.round((label.position.y-2.25)/FLOOR_H)+1;
+   label.visible=labelsVisible&&(v==="all"||ownerFloor===Number(v));
+ });
 }
-// Site pad / ground
-addBox(root,0,-.22,0,campusW+.8,.35,campusD+.8,mats.ground);
-// Lobby and entry plaza - central front zone from plan
-room("LOBI SEKOLAH",238,662,704,955,"lobby",{wallHeight:.55,openBack:true});
-// Entrance gate and security post
-room("POS SECURITY",575,885,647,955,"green");
-addBox(root,0,.10,Z(970),5,.15,.42,mats.floor);
-textSprite("GERBANG MASUK",0,Z(970));
+let roofVisible=true,labelsVisible=true,autoRotate=false,topView=false,selected=null;
+updateFloors("all");
+document.getElementById("floorSelect").addEventListener("change",e=>{updateFloors(e.target.value);document.getElementById("title").textContent=e.target.value==="all"?"Seluruh Lantai":`Lantai ${e.target.value}`;document.getElementById("description").textContent="Pilih ruang pada model untuk melihat informasi dan jadwal kegiatan."});
+document.getElementById("roofBtn").onclick=()=>{roofVisible=!roofVisible;document.getElementById("roofBtn").textContent="Atap: "+(roofVisible?"tampil":"sembunyi");updateFloors(document.getElementById("floorSelect").value)};
+document.getElementById("labelsBtn").onclick=()=>{labelsVisible=!labelsVisible;labels.forEach(l=>l.visible=labelsVisible);document.getElementById("labelsBtn").textContent="Label: "+(labelsVisible?"ON":"OFF")};
+document.getElementById("topBtn").onclick=()=>{topView=!topView;if(topView){camera.position.set(0,43,.01)}else{camera.position.set(31,32,38)}controls.target.set(0,3.5,0);controls.update()};
+document.getElementById("resetBtn").onclick=()=>{camera.position.set(27,27,32);controls.target.set(0,3.5,0);controls.update();document.getElementById("floorSelect").value="all";updateFloors("all");roofVisible=true;roofObjects.forEach(o=>o.visible=true);document.getElementById("roofBtn").textContent="Atap: tampil";if(selected){selected.material.emissive?.setHex(0);selected=null}document.getElementById("title").textContent="AL-WILDAN DIGITAL CAMPUS";document.getElementById("description").textContent="Pilih lantai, lalu klik ruang pada model 3D untuk melihat informasi dan kegiatan."};
+document.getElementById("rotateBtn").onclick=()=>{autoRotate=!autoRotate;document.getElementById("rotateBtn").textContent="Putar otomatis: "+(autoRotate?"ON":"OFF")};
+document.getElementById("zoomIn").onclick=()=>camera.position.sub(controls.target).multiplyScalar(.88).add(controls.target);
+document.getElementById("zoomOut").onclick=()=>camera.position.sub(controls.target).multiplyScalar(1.12).add(controls.target);
 
-// Main court, preserve open sports area
-const main=addBox(root,X((258+659)/2),.10,Z((421+646)/2),W(258,659),.20,W(421,646),mats.court,"LAPANGAN UTAMA");
-roomMeshes.push(main);
-function courtLine(x1,y1,x2,y2){const dx=X(x2)-X(x1),dz=Z(y2)-Z(y1),len=Math.hypot(dx,dz);const m=addBox(root,(X(x1)+X(x2))/2,.215,(Z(y1)+Z(y2))/2,len,.025,.035,mats.line);m.rotation.y=-Math.atan2(dz,dx)}
-courtLine(258,533,659,533);courtLine(458,421,458,646);courtLine(258,421,258,646);courtLine(659,421,659,646);
-// Small court at upper right
-const small=addBox(root,X((679+888)/2),.10,Z((369+475)/2),W(679,888),.20,W(369,475),mats.court,"LAPANGAN KECIL");roomMeshes.push(small);
-courtLine(679,422,888,422);courtLine(783,369,783,475);
-
-// Left wing: prayer room, toilets, stairs, labs, classes
-room("MUSHOLA IKHWAN",85,350,236,501,"green");
-room("TOILET (SISI KIRI)",15,437,86,567,"toilet");
-room("TANGGA (SISI KIRI)",86,501,173,552,"stair");
-room("LAB KOMPUTER",15,592,91,662,"green");
-room("KELAS 9 AE 1",96,592,167,662,"class");
-room("KELAS 12 DI 1",168,592,238,662,"class");
-room("LAB IPA",258,309,328,350,"green");
-room("KELAS 3 INTER 1",258,350,328,421,"class");
-room("KELAS 2 INTER 2",328,350,398,421,"class");
-room("KELAS 2 INTER 1",398,350,470,421,"class");
-room("KELAS 1 INTER 1",470,350,543,421,"class");
-room("TANGGA (ATAS)",543,350,589,421,"stair");
-room("TOILET (ATAS)",589,350,659,421,"toilet");
-
-// Right wing: upper classrooms, admin, canteen and mushola
-room("KELAS 3 INTER 3",783,309,854,369,"class");
-room("KELAS 3 INTER 4",854,309,925,369,"class");
-room("KANTIN",920,374,1008,475,"green");
-room("MUSHOLA AKHWAT",920,475,1008,704,"green");
-room("RUANG PPDB",679,490,750,563,"green");
-room("KELAS 2 INTER 4",750,490,821,563,"class");
-room("RUANG MANAJEMEN",821,490,870,543,"green");
-room("RUANG FINANCE",870,490,920,543,"green");
-room("TOILET (KANAN)",870,543,920,578,"toilet");
-room("TANGGA (KANAN)",832,578,922,609,"stair");
-room("KELAS 1 INTER 2",679,609,750,680,"class");
-room("KELAS 2 INTER 3",750,609,821,680,"class");
-room("KELAS 4 INTER 3",821,609,891,680,"class");
-
-// Simple wall/column accents and floor markers
-const boundaryMat=new THREE.MeshStandardMaterial({color:0x263d4c});
-function boundary(x1,y1,x2,y2){
- const dx=X(x2)-X(x1),dz=Z(y2)-Z(y1),len=Math.hypot(dx,dz);
- const m=addBox(root,(X(x1)+X(x2))/2,.28,(Z(y1)+Z(y2))/2,len,.10,.10,boundaryMat);
- m.rotation.y=-Math.atan2(dz,dx);
-}
-boundary(15,309,1008,309);boundary(15,309,15,956);boundary(1008,309,1008,956);
-boundary(15,956,387,956);boundary(554,956,1008,956);
-
-// Building/site group color accents and orientation markers
-textSprite("GEDUNG B · KIRI",X(350),Z(285),"#8a5200");
-textSprite("GEDUNG A · TENGAH",X(510),Z(395),"#174d83");
-textSprite("GEDUNG C · KANAN",X(850),Z(285),"#8a2635");
-
-// Ground labels, front / rear
+let scheduleRows=[];
+function flattenRows(data){if(Array.isArray(data))return data;if(data&&typeof data==="object"){for(const k of ["schedules","SCHEDULES","activities","ACTIVITIES","data"])if(Array.isArray(data[k]))return data[k];for(const v of Object.values(data)){if(Array.isArray(v)&&v.length&&typeof v[0]==="object")return v}}return []}
+async function loadActivities(){const status=document.getElementById("activityStatus");try{const res=await fetch(API_URL+"?action=getBootstrap");if(!res.ok)throw new Error("HTTP "+res.status);const data=await res.json();scheduleRows=flattenRows(data);status.textContent=scheduleRows.length?"Data dari server berhasil dimuat.":"Koneksi berhasil; format jadwal perlu disesuaikan dengan struktur API.";status.style.color=scheduleRows.length?"#9ee6c0":"#f4d28b"}catch(err){status.textContent="Data jadwal belum tersambung. Model 3D tetap dapat digunakan.";status.style.color="#f4d28b"}}
+function valueOf(row,keys){for(const k of keys){if(row[k]!==undefined&&row[k]!==null&&String(row[k]).trim()!=="")return String(row[k])}return ""}
+function showActivities(roomName){const list=document.getElementById("activityList");list.innerHTML="";const matches=scheduleRows.filter(r=>{const loc=valueOf(r,["location","room","room_name","ruang","lokasi","location_name"]);return loc.toLowerCase()===roomName.toLowerCase()||loc.toLowerCase().includes(roomName.toLowerCase())||roomName.toLowerCase().includes(loc.toLowerCase())&&loc.length>2});if(!matches.length){const li=document.createElement("li");li.textContent="Belum ada jadwal yang cocok untuk ruang ini pada data yang berhasil dibaca.";list.appendChild(li);return}matches.forEach(r=>{const li=document.createElement("li");const act=valueOf(r,["activity","activity_name","program","subject","kegiatan","name"])||"Kegiatan";const cls=valueOf(r,["class","class_name","kelas","group"]);const day=valueOf(r,["day","day_name","hari"]);const time=valueOf(r,["time","time_range","jam","start_time"]);li.textContent=[act,cls,day,time].filter(Boolean).join(" · ");list.appendChild(li)})}
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
-let selected=null,autoRotate=false,roofHidden=false,labelsVisible=true;
-renderer.domElement.addEventListener("click",e=>{
- const r=renderer.domElement.getBoundingClientRect();
- pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;
- raycaster.setFromCamera(pointer,camera);
- const hits=raycaster.intersectObjects(roomMeshes,true);
- if(!hits.length)return;
- const obj=hits[0].object;const name=obj.userData.roomName||"Area sekolah";
- document.getElementById("roomTitle").textContent=name;
- const descriptions={
- "LAPANGAN UTAMA":"Lapangan utama berada di bagian tengah kawasan sekolah.",
- "LAPANGAN KECIL":"Lapangan kecil berada di sisi kanan atas denah.",
- "LOBI SEKOLAH":"Area lobi berada di bagian depan/tengah, menuju gerbang masuk.",
- "POS SECURITY":"Pos keamanan berada di area depan dekat gerbang masuk."
- };
- document.getElementById("roomInfo").textContent=descriptions[name]||"Ruang: "+name+". Posisi mengikuti denah lantai 1.";
- if(selected)selected.material.emissive?.setHex(0x000000);
- selected=obj;selected.material.emissive?.setHex(0x244466);
-});
-document.getElementById("roofBtn").onclick=()=>{
- roofHidden=!roofHidden;roofMeshes.forEach(m=>m.visible=!roofHidden);
- document.getElementById("roofBtn").textContent="Sembunyikan atap: "+(roofHidden?"ON":"OFF");
-};
-document.getElementById("labelsBtn").onclick=()=>{
- labelsVisible=!labelsVisible;labelSprites.forEach(s=>s.visible=labelsVisible);
- document.getElementById("labelsBtn").textContent="Label ruang: "+(labelsVisible?"ON":"OFF");
-};
-document.getElementById("viewMode").onchange=e=>{
- if(e.target.value==="top"){camera.position.set(0,42,.01);controls.target.set(0,0,0)}
- else{camera.position.set(27,29,35);controls.target.set(0,0,0)}
- controls.update();
-};
-document.getElementById("resetBtn").onclick=()=>{
- camera.position.set(27,29,35);controls.target.set(0,0,0);controls.update();
- document.getElementById("viewMode").value="perspective";
- if(roofHidden){roofHidden=false;roofMeshes.forEach(m=>m.visible=true);document.getElementById("roofBtn").textContent="Sembunyikan atap: OFF"}
- if(selected){selected.material.emissive?.setHex(0x000000);selected=null}
- document.getElementById("roomTitle").textContent="Denah Lantai 1";
- document.getElementById("roomInfo").textContent="Pilih salah satu ruang pada model 3D untuk melihat namanya.";
-};
-document.getElementById("rotateBtn").onclick=()=>{
- autoRotate=!autoRotate;document.getElementById("rotateBtn").textContent="Putar otomatis: "+(autoRotate?"ON":"OFF");
-};
-document.getElementById("zoomIn").onclick=()=>{camera.position.sub(controls.target).multiplyScalar(.88).add(controls.target)};
-document.getElementById("zoomOut").onclick=()=>{camera.position.sub(controls.target).multiplyScalar(1.12).add(controls.target)};
-function animate(){requestAnimationFrame(animate);if(autoRotate){const v=camera.position.clone().sub(controls.target);v.applyAxisAngle(new THREE.Vector3(0,1,0),.002);camera.position.copy(controls.target).add(v)}controls.update();renderer.render(scene,camera)}
-animate();
+renderer.domElement.addEventListener("click",e=>{const rect=renderer.domElement.getBoundingClientRect();pointer.x=((e.clientX-rect.left)/rect.width)*2-1;pointer.y=-((e.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(clickable,false);if(!hits.length)return;const obj=hits[0].object,name=obj.userData.roomName||"Ruang";if(selected)selected.material.emissive?.setHex(0);selected=obj;selected.material.emissive?.setHex(0x244466);document.getElementById("title").textContent=name;document.getElementById("description").textContent="Ruang dipilih pada model 3D. Informasi aktivitas ditampilkan jika tersedia pada database jadwal.";showActivities(name)});
+function animate(){requestAnimationFrame(animate);if(autoRotate){const v=camera.position.clone().sub(controls.target);v.applyAxisAngle(new THREE.Vector3(0,1,0),.0018);camera.position.copy(controls.target).add(v)}controls.update();renderer.render(scene,camera)}animate();
 addEventListener("resize",()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+loadActivities();
 </script>
-</body>
-</html>
+</body></html>
