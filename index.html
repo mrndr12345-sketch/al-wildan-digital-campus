@@ -363,26 +363,16 @@ function box(
 // ========================================
 
 // Dasar lingkungan sekolah
-box(
-  scene,0,-0.35,0,
-  35,0.5,28,
-  groundMat
-);
+box(scene,0,-0.35,0,35,0.5,28,groundMat);
 
 // Halaman dan lobi depan
-box(
-  scene,0,-0.07,9,
-  26,0.12,7,
-  pathMat
-);
+box(scene,0,-0.07,9,26,0.12,7,pathMat);
 
 // Area gerbang masuk
 box(
   scene,0,0.02,13,
   8,0.18,1.2,
-  new THREE.MeshStandardMaterial({
-    color:0xd5d1c4
-  })
+  new THREE.MeshStandardMaterial({color:0xd5d1c4})
 );
 
 
@@ -390,11 +380,7 @@ box(
 // 6. LAPANGAN UTAMA
 // ========================================
 
-box(
-  scene,0,0.02,-2,
-  11,0.15,7,
-  courtMat
-);
+box(scene,0,0.02,-2,11,0.15,7,courtMat);
 
 // Garis lapangan
 box(scene,0,0.11,-5.5,0.08,0.02,0.3,lineMat);
@@ -449,7 +435,10 @@ function createBuilding(
 
     const levelY = (floor-1)*2.25;
 
+    // Simpan ketinggian asli setiap lantai
     floorGroup.userData.levelY = levelY;
+
+    // Posisi awal sesuai ketinggian lantai
     floorGroup.position.y = levelY;
 
     // Struktur dinding
@@ -564,7 +553,7 @@ function createBuilding(
   );
 
 
-  // Tangga menghadap ke lapangan
+  // Tangga menghadap lapangan
   if(name==="GEDUNG B" || name==="GEDUNG C") {
 
     const direction =
@@ -667,24 +656,16 @@ box(scene,0,2.3,13,7.2,0.2,0.2,gateMat);
 function createTree(x,z) {
 
   const trunk = new THREE.Mesh(
-    new THREE.CylinderGeometry(
-      0.15,0.2,1,8
-    ),
-    new THREE.MeshStandardMaterial({
-      color:0x765035
-    })
+    new THREE.CylinderGeometry(0.15,0.2,1,8),
+    new THREE.MeshStandardMaterial({color:0x765035})
   );
 
   trunk.position.set(x,0.5,z);
   scene.add(trunk);
 
   const leaves = new THREE.Mesh(
-    new THREE.SphereGeometry(
-      0.8,12,10
-    ),
-    new THREE.MeshStandardMaterial({
-      color:0x397b48
-    })
+    new THREE.SphereGeometry(0.8,12,10),
+    new THREE.MeshStandardMaterial({color:0x397b48})
   );
 
   leaves.position.set(x,1.5,z);
@@ -731,10 +712,7 @@ renderer.domElement.addEventListener(
     raycaster.setFromCamera(pointer,camera);
 
     const hits =
-      raycaster.intersectObjects(
-        scene.children,
-        true
-      );
+      raycaster.intersectObjects(scene.children,true);
 
     let found = null;
 
@@ -742,10 +720,7 @@ renderer.domElement.addEventListener(
 
       let obj = hit.object;
 
-      while(
-        obj &&
-        !obj.userData.buildingName
-      ) {
+      while(obj && !obj.userData.buildingName) {
         obj = obj.parent;
       }
 
@@ -779,7 +754,7 @@ renderer.domElement.addEventListener(
 
 
 // ========================================
-// 13. PEMILIHAN LANTAI
+// 13. PEMILIHAN LANTAI - PERBAIKAN
 // ========================================
 
 document.getElementById("floorSelect")
@@ -795,24 +770,30 @@ document.getElementById("floorSelect")
 
       if(value==="all") {
 
+        // Semua lantai tampil di ketinggian asli
         floor.visible = true;
         floor.position.y = level;
 
       } else {
 
+        // Hanya lantai yang dipilih yang terlihat
         const selectedFloor =
-          Number(value)===i+1;
+          Number(value) === i+1;
 
         floor.visible = selectedFloor;
 
-        // Lantai terpilih ditampilkan pada posisi dasar
-        floor.position.y = 0;
+        // Pertahankan posisi vertikal asli
+        floor.position.y = level;
       }
     });
 
-    // Atap hanya muncul pada mode semua lantai
-    b.roof.visible = value==="all";
+    // Atap hanya muncul jika semua lantai ditampilkan
+    b.roof.visible = value === "all";
   });
+
+  document.getElementById(
+    "buildingTitle"
+  ).textContent = "Digital Campus";
 
   document.getElementById(
     "buildingInfo"
@@ -820,7 +801,7 @@ document.getElementById("floorSelect")
     value==="all"
     ? "Seluruh lantai gedung ditampilkan."
     : "Menampilkan lantai "+value+
-      " dari ketiga gedung.";
+      " pada ketinggian aslinya.";
 });
 
 
@@ -843,8 +824,9 @@ document.getElementById("resetView").onclick=()=>{
     b.floors.forEach(f=>{
 
       f.visible = true;
-      f.position.y = f.userData.levelY;
 
+      // Kembalikan setiap lantai ke ketinggian aslinya
+      f.position.y = f.userData.levelY;
     });
 
     b.roof.visible = true;
