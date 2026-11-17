@@ -7,139 +7,28 @@
 <title>AL-WILDAN DIGITAL CAMPUS</title>
 
 <style>
-* { box-sizing:border-box; }
-
-body {
-  margin:0;
-  overflow:hidden;
-  font-family:Arial,sans-serif;
-  background:#07182d;
-  color:white;
-}
-
-header {
-  position:absolute;
-  z-index:5;
-  top:0; left:0; right:0;
-  height:76px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 24px;
-  background:rgba(5,20,39,.96);
-  border-bottom:1px solid #244665;
-}
-
-.brand {
-  font-size:20px;
-  font-weight:bold;
-  letter-spacing:1px;
-}
-
-.brand span { color:#35d6d0; }
-
-.subtitle {
-  font-size:12px;
-  color:#a9c4dc;
-  margin-top:5px;
-}
-
-#scene {
-  width:100vw;
-  height:100vh;
-  display:block;
-}
-
-.panel {
-  position:absolute;
-  z-index:4;
-  top:95px;
-  left:20px;
-  width:270px;
-  padding:18px;
-  border:1px solid #315574;
-  border-radius:14px;
-  background:rgba(7,26,48,.95);
-  box-shadow:0 10px 35px #0005;
-}
-
-.panel h3 {
-  margin:0 0 8px;
-  color:#45ded6;
-}
-
-.panel p {
-  font-size:12px;
-  line-height:1.6;
-  color:#c1d4e5;
-}
-
-button,select {
-  width:100%;
-  margin-top:8px;
-  padding:11px;
-  border:1px solid #3b6688;
-  border-radius:7px;
-  background:#123654;
-  color:white;
-  cursor:pointer;
-  font-size:13px;
-}
-
-button:hover { background:#17617a; }
-
-.building-key {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:9px;
-  font-size:12px;
-  color:#d5e5f1;
-}
-
-.color-dot {
-  width:13px;
-  height:13px;
-  border-radius:3px;
-  display:inline-block;
-}
-
-.controls {
-  position:absolute;
-  right:20px;
-  bottom:22px;
-  z-index:4;
-  width:160px;
-}
-
-.hint {
-  position:absolute;
-  bottom:25px;
-  left:20px;
-  color:#e0edf6;
-  font-size:11px;
-  z-index:4;
-  text-shadow:0 1px 3px #345;
-}
-
-@media(max-width:600px) {
-  header { padding:0 12px; }
-  .brand { font-size:14px; }
-  .panel {
-    top:85px;
-    left:10px;
-    width:195px;
-    padding:12px;
-  }
-  .controls {
-    right:10px;
-    width:125px;
-  }
-  .hint {
-    bottom:8px;
-    left:10px;
-    max-width:65%;
-  }
+*{box-sizing:border-box}
+body{margin:0;overflow:hidden;font-family:Arial,sans-serif;background:#9bc5df;color:white}
+header{position:absolute;z-index:5;top:0;left:0;right:0;height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#0b1d32;border-bottom:1px solid #244665}
+.brand{font-size:20px;font-weight:bold;letter-spacing:1px}
+.brand span{color:#35d6d0}
+.subtitle{font-size:12px;color:#a9c4dc;margin-top:5px}
+#scene{width:100vw;height:100vh;display:block}
+.panel{position:absolute;z-index:4;top:95px;left:20px;width:270px;padding:18px;border:1px solid #315574;border-radius:14px;background:rgba(7,26,48,.95);box-shadow:0 10px 35px #0005}
+.panel h3{margin:0 0 8px;color:#45ded6}
+.panel p{font-size:12px;line-height:1.6;color:#c1d4e5}
+button,select{width:100%;margin-top:8px;padding:11px;border:1px solid #3b6688;border-radius:7px;background:#123654;color:white;cursor:pointer;font-size:13px}
+button:hover{background:#17617a}
+.building-key{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:12px;color:#d5e5f1}
+.color-dot{width:13px;height:13px;border-radius:3px;display:inline-block}
+.controls{position:absolute;right:20px;bottom:22px;z-index:4;width:160px}
+.hint{position:absolute;bottom:25px;left:20px;color:#e0edf6;font-size:11px;z-index:4;text-shadow:0 1px 3px #345}
+@media(max-width:600px){
+ header{padding:0 12px}
+ .brand{font-size:14px}
+ .panel{top:85px;left:10px;width:195px;padding:12px}
+ .controls{right:10px;width:125px}
+ .hint{bottom:8px;left:10px;max-width:65%}
 }
 </style>
 </head>
@@ -147,972 +36,610 @@ button:hover { background:#17617a; }
 <body>
 
 <header>
-  <div>
-    <div class="brand">
-      AL-WILDAN <span>DIGITAL CAMPUS</span>
-    </div>
-    <div class="subtitle">
-      Islamic School 14 · Bumi Mutiara Bogor
-    </div>
-  </div>
-  <div style="font-size:12px;color:#9ec6df">
-    3D CAMPUS
-  </div>
+ <div>
+  <div class="brand">AL-WILDAN <span>DIGITAL CAMPUS</span></div>
+  <div class="subtitle">Islamic School 14 · Bumi Mutiara Bogor</div>
+ </div>
+ <div style="font-size:12px;color:#9ec6df">3D CAMPUS</div>
 </header>
 
 <div class="panel">
-  <h3 id="buildingTitle">Digital Campus</h3>
+ <h3 id="buildingTitle">Digital Campus</h3>
+ <p id="buildingInfo">Selamat datang di visualisasi 3D AL-WILDAN Islamic School 14.</p>
 
-  <p id="buildingInfo">
-    Selamat datang di visualisasi 3D
-    AL-WILDAN Islamic School 14.
-    Klik bangunan untuk melihat informasi.
-  </p>
+ <div class="building-key"><span class="color-dot" style="background:#e6a23c"></span>Gedung B — Kiri</div>
+ <div class="building-key"><span class="color-dot" style="background:#4b91d1"></span>Gedung A — Tengah</div>
+ <div class="building-key"><span class="color-dot" style="background:#d9364f"></span>Gedung C — Kanan</div>
 
-  <div class="building-key">
-    <span class="color-dot" style="background:#e6a23c"></span>
-    Gedung B — Kiri
-  </div>
+ <select id="floorSelect">
+  <option value="all">Tampilkan semua lantai</option>
+  <option value="1">Lantai 1</option>
+  <option value="2">Lantai 2</option>
+  <option value="3">Lantai 3</option>
+ </select>
 
-  <div class="building-key">
-    <span class="color-dot" style="background:#4b91d1"></span>
-    Gedung A — Tengah
-  </div>
-
-  <div class="building-key">
-    <span class="color-dot" style="background:#d9364f"></span>
-    Gedung C — Kanan
-  </div>
-
-  <select id="floorSelect">
-    <option value="all">Tampilkan semua lantai</option>
-    <option value="1">Lantai 1</option>
-    <option value="2">Lantai 2</option>
-    <option value="3">Lantai 3</option>
-  </select>
-
-  <button id="resetView">
-    Kembalikan tampilan awal
-  </button>
+ <button id="resetView">Kembalikan tampilan awal</button>
 </div>
 
 <div class="controls">
-  <button id="rotateButton">Putar otomatis: OFF</button>
-  <button id="zoomIn">Perbesar +</button>
-  <button id="zoomOut">Perkecil −</button>
+ <button id="rotateButton">Putar otomatis: OFF</button>
+ <button id="zoomIn">Perbesar +</button>
+ <button id="zoomOut">Perkecil −</button>
 </div>
 
-<div class="hint">
-  Geser mouse untuk memutar · Scroll untuk zoom · Klik bangunan untuk memilih
-</div>
-
+<div class="hint">Geser mouse untuk memutar · Scroll untuk zoom · Klik bangunan untuk memilih</div>
 <div id="scene"></div>
 
 <script type="importmap">
 {
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-  }
+ "imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+ }
 }
 </script>
 
 <script type="module">
-
 import * as THREE from "three";
-import { OrbitControls } from
-"three/addons/controls/OrbitControls.js";
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 
-
-// ========================================
+// ======================================
 // 1. SCENE DAN KAMERA
-// ========================================
+// ======================================
 
-const container = document.getElementById("scene");
+const container=document.getElementById("scene");
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x9bc5df);
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x9bc5df);
-scene.fog = new THREE.Fog(0x9bc5df,65,130);
-
-const camera = new THREE.PerspectiveCamera(
-  38,
-  window.innerWidth/window.innerHeight,
-  0.1,
-  250
+const camera=new THREE.PerspectiveCamera(
+ 38,window.innerWidth/window.innerHeight,0.1,250
 );
+camera.position.set(30,27,37);
 
-camera.position.set(29,25,34);
-
-const renderer = new THREE.WebGLRenderer({
-  antialias:true
-});
-
+const renderer=new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
 container.appendChild(renderer.domElement);
 
-const controls = new OrbitControls(
-  camera,
-  renderer.domElement
-);
-
-controls.enableDamping = true;
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;
 controls.target.set(0,2,0);
-controls.maxPolarAngle = Math.PI/2.05;
-controls.minDistance = 10;
-controls.maxDistance = 65;
+controls.maxPolarAngle=Math.PI/2.05;
+controls.minDistance=10;
+controls.maxDistance=65;
 
+// ======================================
+// 2. CAHAYA
+// ======================================
 
-// ========================================
-// 2. PENCAHAYAAN
-// ========================================
+scene.add(new THREE.HemisphereLight(0xffffff,0x536477,2));
 
-scene.add(
-  new THREE.HemisphereLight(
-    0xffffff,
-    0x536477,
-    2
-  )
-);
-
-const sunlight = new THREE.DirectionalLight(
-  0xffffff,
-  2.5
-);
-
+const sunlight=new THREE.DirectionalLight(0xffffff,2.5);
 sunlight.position.set(-15,30,20);
-sunlight.castShadow = true;
+sunlight.castShadow=true;
 sunlight.shadow.mapSize.set(2048,2048);
-
 scene.add(sunlight);
 
-
-// ========================================
+// ======================================
 // 3. MATERIAL
-// ========================================
+// ======================================
 
-const groundMat = new THREE.MeshStandardMaterial({
-  color:0x789b70
-});
+const groundMat=new THREE.MeshStandardMaterial({color:0x789b70});
+const wallMat=new THREE.MeshStandardMaterial({color:0xf1e9d9});
+const roofMat=new THREE.MeshStandardMaterial({color:0x913f32});
+const windowMat=new THREE.MeshStandardMaterial({color:0x75bfd0});
+const trimMat=new THREE.MeshStandardMaterial({color:0x9d3430});
+const courtMat=new THREE.MeshStandardMaterial({color:0x168da2});
+const smallCourtMat=new THREE.MeshStandardMaterial({color:0x258b48});
+const pathMat=new THREE.MeshStandardMaterial({color:0xc9c3ad});
+const whiteMat=new THREE.MeshStandardMaterial({color:0xffffff});
 
-const wallMat = new THREE.MeshStandardMaterial({
-  color:0xf1e9d9
-});
+// ======================================
+// 4. FUNGSI OBJEK KOTAK
+// ======================================
 
-const roofMat = new THREE.MeshStandardMaterial({
-  color:0x913f32
-});
-
-const windowMat = new THREE.MeshStandardMaterial({
-  color:0x75bfd0,
-  metalness:0.1,
-  roughness:0.3
-});
-
-const trimMat = new THREE.MeshStandardMaterial({
-  color:0x9d3430
-});
-
-const courtMat = new THREE.MeshStandardMaterial({
-  color:0x168da2
-});
-
-const smallCourtMat = new THREE.MeshStandardMaterial({
-  color:0x258b48
-});
-
-const pathMat = new THREE.MeshStandardMaterial({
-  color:0xc9c3ad
-});
-
-const whiteMat = new THREE.MeshStandardMaterial({
-  color:0xffffff
-});
-
-
-// ========================================
-// 4. FUNGSI KOTAK
-// ========================================
-
-function box(
-  parent,x,y,z,
-  sx,sy,sz,
-  material,
-  name=""
-) {
-  const mesh = new THREE.Mesh(
-    new THREE.BoxGeometry(sx,sy,sz),
-    material.clone()
-  );
-
-  mesh.position.set(x,y,z);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  mesh.userData.building = name;
-
-  parent.add(mesh);
-  return mesh;
+function box(parent,x,y,z,sx,sy,sz,material,name=""){
+ const mesh=new THREE.Mesh(
+  new THREE.BoxGeometry(sx,sy,sz),
+  material.clone()
+ );
+ mesh.position.set(x,y,z);
+ mesh.castShadow=true;
+ mesh.receiveShadow=true;
+ mesh.userData.building=name;
+ parent.add(mesh);
+ return mesh;
 }
 
-
-// ========================================
+// ======================================
 // 5. DASAR KAWASAN
-// ========================================
+// ======================================
 
-box(
-  scene,0,-0.35,0,
-  43,0.5,35,
-  groundMat
-);
+box(scene,0,-0.35,0,48,0.5,38,groundMat);
 
-// Halaman depan sekolah
-box(
-  scene,0,-0.07,13,
-  32,0.12,5,
-  pathMat
-);
+box(scene,0,-0.07,13,34,0.12,5,pathMat);
+box(scene,0,0.02,17,9,0.18,1.2,
+ new THREE.MeshStandardMaterial({color:0xd5d1c4}));
 
-// Area gerbang
-box(
-  scene,0,0.02,17,
-  9,0.18,1.2,
-  new THREE.MeshStandardMaterial({
-    color:0xd5d1c4
-  })
-);
-
-
-// ========================================
+// ======================================
 // 6. LAPANGAN UTAMA
-// ========================================
+// ======================================
 
-box(
-  scene,0,0.02,7,
-  13,0.15,9,
-  courtMat
-);
+box(scene,0,0.02,7,13,0.15,9,courtMat);
 
-// Garis lapangan
 box(scene,0,0.11,2.5,0.07,0.02,0.3,whiteMat);
 box(scene,0,0.11,11.5,0.07,0.02,0.3,whiteMat);
 box(scene,-6.5,0.11,7,0.07,0.02,9,whiteMat);
 box(scene,6.5,0.11,7,0.07,0.02,9,whiteMat);
 box(scene,0,0.11,7,0.07,0.02,9,whiteMat);
 
-const centerCircle = new THREE.Mesh(
-  new THREE.TorusGeometry(1,0.035,8,48),
-  whiteMat
+const centerCircle=new THREE.Mesh(
+ new THREE.TorusGeometry(1,0.035,8,48),whiteMat
 );
-
-centerCircle.rotation.x = Math.PI/2;
+centerCircle.rotation.x=Math.PI/2;
 centerCircle.position.set(0,0.12,7);
 scene.add(centerCircle);
 
-
-// ========================================
+// ======================================
 // 7. LAPANGAN KECIL
-//    MEMANJANG KE ARAH KANAN
-// ========================================
+//    DIGESER KE KANAN GEDUNG A
+// ======================================
+
+// Gedung A berada di tengah.
+// Lapangan kecil diletakkan lebih ke kanan
+// agar tidak bertumpang tindih dengan Gedung A.
+
+const smallCourtX=12.5;
+const smallCourtZ=-6;
 
 box(
-  scene,9,0.03,-6,
-  10,0.16,4,
-  smallCourtMat
+ scene,
+ smallCourtX,0.03,smallCourtZ,
+ 9,0.16,3.6,
+ smallCourtMat
 );
 
-// Garis lapangan kecil
-box(scene,4,0.13,-6,0.06,0.02,4,whiteMat);
-box(scene,14,0.13,-6,0.06,0.02,4,whiteMat);
-box(scene,9,0.13,-6,10,0.02,0.06,whiteMat);
+// Garis batas lapangan
+box(scene,smallCourtX-4.5,0.13,smallCourtZ,0.06,0.02,3.6,whiteMat);
+box(scene,smallCourtX+4.5,0.13,smallCourtZ,0.06,0.02,3.6,whiteMat);
+box(scene,smallCourtX,0.13,smallCourtZ-1.8,9,0.02,0.06,whiteMat);
+box(scene,smallCourtX,0.13,smallCourtZ+1.8,9,0.02,0.06,whiteMat);
+box(scene,smallCourtX,0.13,smallCourtZ,0.06,0.02,3.6,whiteMat);
 
-const smallCircle = new THREE.Mesh(
-  new THREE.TorusGeometry(0.65,0.025,8,32),
-  whiteMat
+const smallCircle=new THREE.Mesh(
+ new THREE.TorusGeometry(0.55,0.025,8,32),whiteMat
 );
-
-smallCircle.rotation.x = Math.PI/2;
-smallCircle.position.set(9,0.14,-6);
+smallCircle.rotation.x=Math.PI/2;
+smallCircle.position.set(smallCourtX,0.14,smallCourtZ);
 scene.add(smallCircle);
 
-
-// ========================================
+// ======================================
 // 8. DATA GEDUNG
-// ========================================
+// ======================================
 
-const buildings = [];
-const allBuildings = [];
+const buildings=[];
+const allBuildings=[];
 
+// ======================================
+// 9. GEDUNG UTAMA 3 LANTAI
+// ======================================
 
-// ========================================
-// 9. FUNGSI GEDUNG UTAMA 3 LANTAI
-// ========================================
+function createMainBuilding(name,x,z,width,depth,color){
 
-function createMainBuilding(
-  name,x,z,width,depth,identityColor
-) {
+ const group=new THREE.Group();
+ group.position.set(x,0,z);
+ group.userData.buildingName=name;
+ scene.add(group);
 
-  const group = new THREE.Group();
+ const floors=[];
 
-  group.position.set(x,0,z);
-  group.userData.buildingName = name;
+ for(let floor=1;floor<=3;floor++){
 
-  scene.add(group);
+  const floorGroup=new THREE.Group();
+  const levelY=(floor-1)*2.25;
+  floorGroup.position.y=levelY;
+  floorGroup.userData.levelY=levelY;
 
-  const floors = [];
+  box(floorGroup,0,1.05,0,width,2.1,depth,wallMat,name);
 
-  for(let floor=1;floor<=3;floor++) {
+  box(floorGroup,0,0.08,depth/2+0.04,width+0.1,0.16,0.12,trimMat,name);
+  box(floorGroup,0,2.08,depth/2+0.04,width+0.1,0.12,0.12,trimMat,name);
 
-    const floorGroup = new THREE.Group();
-    const levelY = (floor-1)*2.25;
+  const windowCount=Math.max(2,Math.floor(width/1.5));
 
-    floorGroup.userData.levelY = levelY;
-    floorGroup.position.y = levelY;
+  for(let i=0;i<windowCount;i++){
+   const spacing=width/windowCount;
+   const wx=-width/2+spacing*(i+0.5);
 
-    // Dinding lantai
-    box(
-      floorGroup,
-      0,1.05,0,
-      width,2.1,depth,
-      wallMat,name
-    );
-
-    // Aksen dinding
-    box(
-      floorGroup,
-      0,0.08,depth/2+0.04,
-      width+0.1,0.16,0.12,
-      trimMat,name
-    );
-
-    box(
-      floorGroup,
-      0,2.08,depth/2+0.04,
-      width+0.1,0.12,0.12,
-      trimMat,name
-    );
-
-    // Jendela depan
-    const windowCount = Math.max(
-      2,Math.floor(width/1.5)
-    );
-
-    for(let i=0;i<windowCount;i++) {
-
-      const spacing = width/windowCount;
-      const wx = -width/2+spacing*(i+0.5);
-
-      box(
-        floorGroup,
-        wx,1.15,depth/2+0.07,
-        Math.min(0.8,spacing*0.65),
-        0.85,0.08,
-        windowMat,name
-      );
-    }
-
-    // Jendela samping
-    const sideCount = Math.max(
-      2,Math.floor(depth/1.8)
-    );
-
-    for(let i=0;i<sideCount;i++) {
-
-      const wz = -depth/2+
-        (depth/sideCount)*(i+0.5);
-
-      box(
-        floorGroup,
-        width/2+0.07,1.15,wz,
-        0.08,0.85,0.8,
-        windowMat,name
-      );
-    }
-
-    // Identitas warna gedung
-    box(
-      floorGroup,
-      0,0.65,depth/2+0.09,
-      Math.min(1.5,width*0.4),
-      0.28,0.08,
-      new THREE.MeshStandardMaterial({
-        color:identityColor
-      }),
-      name
-    );
-
-    group.add(floorGroup);
-    floors.push(floorGroup);
+   box(
+    floorGroup,wx,1.15,depth/2+0.07,
+    Math.min(0.8,spacing*0.65),0.85,0.08,
+    windowMat,name
+   );
   }
 
-  // Atap
-  const roof = box(
-    group,
-    0,6.85,0,
-    width+0.5,0.3,depth+0.5,
-    roofMat,name
-  );
+  const sideCount=Math.max(2,Math.floor(depth/1.8));
 
-  // Kanopi depan
+  for(let i=0;i<sideCount;i++){
+   const wz=-depth/2+(depth/sideCount)*(i+0.5);
+
+   box(
+    floorGroup,width/2+0.07,1.15,wz,
+    0.08,0.85,0.8,windowMat,name
+   );
+  }
+
   box(
-    group,
-    0,0.25,depth/2+0.55,
-    Math.min(2.5,width*0.6),
-    0.2,0.9,
-    trimMat,name
+   floorGroup,0,0.65,depth/2+0.09,
+   Math.min(1.5,width*0.4),0.28,0.08,
+   new THREE.MeshStandardMaterial({color}),name
   );
 
-  // Tangga samping menghadap lapangan utama
-  if(name==="GEDUNG B") {
-    createSideStairs(group,width,depth,1,name);
-  }
+  group.add(floorGroup);
+  floors.push(floorGroup);
+ }
 
-  if(name==="GEDUNG C") {
-    createSideStairs(group,width,depth,-1,name);
-  }
+ const roof=box(group,0,6.85,0,width+0.5,0.3,depth+0.5,roofMat,name);
 
-  buildings.push({
-    name,group,floors,roof
-  });
+ box(
+  group,0,0.25,depth/2+0.55,
+  Math.min(2.5,width*0.6),0.2,0.9,trimMat,name
+ );
 
-  allBuildings.push(group);
+ if(name==="GEDUNG B")createSideStairs(group,width,depth,1,name);
+ if(name==="GEDUNG C")createSideStairs(group,width,depth,-1,name);
 
-  return group;
+ buildings.push({name,group,floors,roof});
+ allBuildings.push(group);
+
+ return group;
 }
 
-
-// ========================================
+// ======================================
 // 10. TANGGA GEDUNG B DAN C
-// ========================================
+// ======================================
 
-function createSideStairs(
-  group,width,depth,direction,name
-) {
+function createSideStairs(group,width,depth,direction,name){
 
-  const stairMat = new THREE.MeshStandardMaterial({
-    color:0xd5d1c4
-  });
+ const stairMat=new THREE.MeshStandardMaterial({color:0xd5d1c4});
 
-  for(let i=0;i<5;i++) {
-
-    const height = (i+1)*0.18;
-    const distance = (4-i)*0.38;
-
-    box(
-      group,
-      direction*(width/2+distance),
-      height/2,
-      0,
-      0.42,height,2.2,
-      stairMat,name
-    );
-  }
+ for(let i=0;i<5;i++){
+  const height=(i+1)*0.18;
+  const distance=(4-i)*0.38;
 
   box(
-    group,
-    direction*(width/2+0.18),
-    0.9,0,
-    0.5,0.12,2.4,
-    stairMat,name
+   group,direction*(width/2+distance),height/2,0,
+   0.42,height,2.2,stairMat,name
   );
+ }
+
+ box(
+  group,direction*(width/2+0.18),0.9,0,
+  0.5,0.12,2.4,stairMat,name
+ );
 }
 
-
-// ========================================
+// ======================================
 // 11. BANGUNAN SATU LANTAI
-// ========================================
+// ======================================
 
-function createSingleBuilding(
-  name,x,z,width,depth,color=0xf1e9d9
-) {
+function createSingleBuilding(name,x,z,width,depth){
 
-  const group = new THREE.Group();
+ const group=new THREE.Group();
+ group.position.set(x,0,z);
+ group.userData.buildingName=name;
+ scene.add(group);
 
-  group.position.set(x,0,z);
-  group.userData.buildingName = name;
+ box(group,0,1.05,0,width,2.1,depth,wallMat,name);
 
-  scene.add(group);
+ box(group,0,0.08,depth/2+0.04,width+0.1,0.14,0.12,trimMat,name);
+ box(group,0,2.08,depth/2+0.04,width+0.1,0.12,0.12,trimMat,name);
 
-  const oneFloorMat = new THREE.MeshStandardMaterial({
-    color
-  });
+ const count=Math.max(2,Math.floor(width/1.5));
 
-  // Dinding
-  box(
-    group,
-    0,1.05,0,
-    width,2.1,depth,
-    oneFloorMat,name
-  );
-
-  // Lis bawah dan atas
-  box(
-    group,
-    0,0.08,depth/2+0.04,
-    width+0.1,0.14,0.12,
-    trimMat,name
-  );
+ for(let i=0;i<count;i++){
+  const spacing=width/count;
 
   box(
-    group,
-    0,2.08,depth/2+0.04,
-    width+0.1,0.12,0.12,
-    trimMat,name
+   group,-width/2+spacing*(i+0.5),1.15,depth/2+0.07,
+   Math.min(0.85,spacing*0.65),0.8,0.08,
+   windowMat,name
   );
+ }
 
-  // Jendela depan
-  const count = Math.max(2,Math.floor(width/1.5));
+ box(group,0,2.25,0,width+0.5,0.3,depth+0.5,roofMat,name);
 
-  for(let i=0;i<count;i++) {
+ box(
+  group,0,0.25,depth/2+0.5,
+  Math.min(2.5,width*0.6),0.2,0.8,trimMat,name
+ );
 
-    const spacing = width/count;
-
-    box(
-      group,
-      -width/2+spacing*(i+0.5),
-      1.15,
-      depth/2+0.07,
-      Math.min(0.85,spacing*0.65),
-      0.8,0.08,
-      windowMat,name
-    );
-  }
-
-  // Atap
-  box(
-    group,
-    0,2.25,0,
-    width+0.5,0.3,depth+0.5,
-    roofMat,name
-  );
-
-  // Kanopi
-  box(
-    group,
-    0,0.25,depth/2+0.5,
-    Math.min(2.5,width*0.6),
-    0.2,0.8,
-    trimMat,name
-  );
-
-  allBuildings.push(group);
-
-  return group;
+ allBuildings.push(group);
+ return group;
 }
 
+// ======================================
+// 12. TIGA GEDUNG UTAMA
+// ======================================
 
-// ========================================
-// 12. POSISI TIGA GEDUNG UTAMA
-// ========================================
+// Gedung B — kiri
+createMainBuilding("GEDUNG B",-12,1,5,10,0xe6a23c);
 
-// Gedung B di kiri
-createMainBuilding(
-  "GEDUNG B",
-  -12,1,
-  5,10,
-  0xe6a23c
-);
+// Gedung A — tengah
+createMainBuilding("GEDUNG A",0,-4,12,4,0x4b91d1);
 
-// Gedung A di tengah
-createMainBuilding(
-  "GEDUNG A",
-  0,-4,
-  12,4,
-  0x4b91d1
-);
+// Gedung C — kanan
+createMainBuilding("GEDUNG C",11,1,5,10,0xd9364f);
 
-// Gedung C di kanan
-createMainBuilding(
-  "GEDUNG C",
-  11,1,
-  5,10,
-  0xd9364f
-);
-
-
-// ========================================
+// ======================================
 // 13. LAB IPA
-//     SATU LANTAI, MENYAMBUNG
-//     DI BELAKANG KIRI GEDUNG A
-// ========================================
+//     SATU LANTAI DI BELAKANG KIRI A
+// ======================================
 
-// Gedung A membentang dari x -6 sampai 6.
-// Lab ditempatkan di belakang sisi kiri Gedung A.
-createSingleBuilding(
-  "LAB IPA",
-  -4.0,-7.7,
-  4.2,3.5
-);
+createSingleBuilding("LAB IPA",-4,-7.7,4.2,3.5);
 
-
-// ========================================
-// 14. GEDUNG KELAS 3 INTER 3
-//     DAN 3 INTER 4
+// ======================================
+// 14. GEDUNG KELAS 3 INTER 3 DAN 3 INTER 4
 //     SATU BANGUNAN MENYATU
-// ========================================
+// ======================================
 
-const classBlock = createSingleBuilding(
-  "GEDUNG KELAS 3 INTER 3 DAN 3 INTER 4",
-  9,-10,
-  9,3.5
+const classBlock=createSingleBuilding(
+ "GEDUNG KELAS 3 INTER 3 DAN 3 INTER 4",
+ 10,-11,
+ 8,3.5
 );
 
-// Garis pembatas visual dua ruang kelas
+// Pembatas dua ruang kelas
 box(
-  classBlock,
-  0,1.1,1.82,
-  0.08,1.9,0.08,
-  trimMat,
-  "PEMBATAS KELAS"
+ classBlock,0,1.1,1.82,
+ 0.08,1.9,0.08,trimMat,
+ "PEMBATAS KELAS"
 );
 
-
-// ========================================
-// 15. KANTIN DAN MUSHOLA AKHWAT
+// ======================================
+// 15. MUSHOLA AKHWAT DAN KANTIN
 //     SATU RANGKAIAN BANGUNAN
-// ========================================
+// ======================================
 
-// Mushola menempel di sisi kanan Gedung C
-const mushola = createSingleBuilding(
-  "MUSHOLA AKHWAT",
-  16,1,
-  5,10
+// Mushola menempel di belakang/sisi Gedung C
+const mushola=createSingleBuilding(
+ "MUSHOLA AKHWAT",
+ 16,1,
+ 5,10
 );
 
-// Kantin menyambung di belakang mushola
-const kantin = createSingleBuilding(
-  "KANTIN",
-  16,-6,
-  5,4
+// Kantin menyambung pada ujung rangkaian mushola
+const kantin=createSingleBuilding(
+ "KANTIN",
+ 16,-6,
+ 5,4
 );
 
-// Pintu dan aksen mushola
-box(
-  mushola,
-  0,0.9,5.08,
-  1.1,1.8,0.12,
-  new THREE.MeshStandardMaterial({
-    color:0x76533d
-  }),
-  "PINTU MUSHOLA"
-);
-
-// Aksen jendela mushola
-for(let i=-1;i<=1;i++) {
-
-  box(
-    mushola,
-    i*1.3,1.25,5.09,
-    0.65,0.9,0.1,
-    new THREE.MeshStandardMaterial({
-      color:0x477b75
-    }),
-    "JENDELA MUSHOLA"
-  );
-}
-
-
-// ========================================
+// ======================================
 // 16. GERBANG SEKOLAH
-// ========================================
+// ======================================
 
-const gateMat = new THREE.MeshStandardMaterial({
-  color:0xeeeeee
-});
+const gateMat=new THREE.MeshStandardMaterial({color:0xeeeeee});
 
 box(scene,-4,1.2,17,0.2,2.4,0.2,gateMat);
 box(scene,4,1.2,17,0.2,2.4,0.2,gateMat);
 box(scene,0,2.3,17,8.2,0.2,0.2,gateMat);
 
-
-// ========================================
+// ======================================
 // 17. POHON
-// ========================================
+// ======================================
 
-function createTree(x,z) {
+function createTree(x,z){
 
-  const trunk = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.15,0.2,1,8),
-    new THREE.MeshStandardMaterial({
-      color:0x765035
-    })
-  );
+ const trunk=new THREE.Mesh(
+  new THREE.CylinderGeometry(0.15,0.2,1,8),
+  new THREE.MeshStandardMaterial({color:0x765035})
+ );
 
-  trunk.position.set(x,0.5,z);
-  scene.add(trunk);
+ trunk.position.set(x,0.5,z);
+ scene.add(trunk);
 
-  const leaves = new THREE.Mesh(
-    new THREE.SphereGeometry(0.8,12,10),
-    new THREE.MeshStandardMaterial({
-      color:0x397b48
-    })
-  );
+ const leaves=new THREE.Mesh(
+  new THREE.SphereGeometry(0.8,12,10),
+  new THREE.MeshStandardMaterial({color:0x397b48})
+ );
 
-  leaves.position.set(x,1.5,z);
-  leaves.castShadow = true;
-
-  scene.add(leaves);
+ leaves.position.set(x,1.5,z);
+ leaves.castShadow=true;
+ scene.add(leaves);
 }
 
 [
-  [-19,-12],
-  [-19,7],
-  [19,-12],
-  [20,8],
-  [-17,14],
-  [17,14],
-  [-7,-13],
-  [5,-13]
-].forEach(p=>{
-  createTree(p[0],p[1]);
+ [-20,-13],[-20,7],[20,-13],[21,8],
+ [-17,14],[17,14],[-7,-14],[5,-14]
+].forEach(p=>createTree(p[0],p[1]));
+
+// ======================================
+// 18. KLIK BANGUNAN
+// ======================================
+
+const raycaster=new THREE.Raycaster();
+const pointer=new THREE.Vector2();
+
+let autoRotate=false;
+
+renderer.domElement.addEventListener("click",event=>{
+
+ const rect=renderer.domElement.getBoundingClientRect();
+
+ pointer.x=((event.clientX-rect.left)/rect.width)*2-1;
+ pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;
+
+ raycaster.setFromCamera(pointer,camera);
+
+ const hits=raycaster.intersectObjects(allBuildings,true);
+ if(!hits.length)return;
+
+ let object=hits[0].object;
+
+ while(object&&!object.userData.buildingName){
+  object=object.parent;
+ }
+
+ if(!object)return;
+
+ const name=object.userData.buildingName;
+
+ document.getElementById("buildingTitle").textContent=name;
+
+ const info={
+  "GEDUNG A":"Gedung utama bagian tengah, tiga lantai.",
+  "GEDUNG B":"Gedung utama bagian kiri, tiga lantai.",
+  "GEDUNG C":"Gedung utama bagian kanan, tiga lantai.",
+  "LAB IPA":"Bangunan laboratorium IPA satu lantai di belakang sisi kiri Gedung A.",
+  "GEDUNG KELAS 3 INTER 3 DAN 3 INTER 4":"Satu bangunan satu lantai yang terdiri dari kelas 3 INTER 3 dan 3 INTER 4.",
+  "MUSHOLA AKHWAT":"Mushola Akhwat satu lantai yang menyatu dengan rangkaian kantin.",
+  "KANTIN":"Kantin satu lantai yang menyatu dengan Mushola Akhwat."
+ };
+
+ document.getElementById("buildingInfo").textContent=
+  info[name]||"Area fasilitas sekolah.";
 });
 
+// ======================================
+// 19. GHOST FLOOR
+// ======================================
 
-// ========================================
-// 18. PEMILIHAN GEDUNG
-// ========================================
+function setFloorAppearance(floor,isSelected){
 
-const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
+ floor.traverse(object=>{
 
-let selected = null;
-let autoRotate = false;
+  if(!object.isMesh||!object.material)return;
 
-renderer.domElement.addEventListener(
-  "click",
-  event => {
+  const materials=Array.isArray(object.material)
+   ?object.material:[object.material];
 
-    const rect =
-      renderer.domElement.getBoundingClientRect();
+  materials.forEach(material=>{
 
-    pointer.x =
-      ((event.clientX-rect.left)/rect.width)*2-1;
+   if(isSelected){
+    material.transparent=false;
+    material.opacity=1;
+    material.depthWrite=true;
+   }else{
+    material.transparent=true;
+    material.opacity=0.25;
+    material.depthWrite=false;
+   }
 
-    pointer.y =
-      -((event.clientY-rect.top)/rect.height)*2+1;
-
-    raycaster.setFromCamera(pointer,camera);
-
-    const hits = raycaster.intersectObjects(
-      allBuildings,
-      true
-    );
-
-    if(!hits.length) return;
-
-    let object = hits[0].object;
-
-    while(object && !object.userData.buildingName) {
-      object = object.parent;
-    }
-
-    if(!object) return;
-
-    const name = object.userData.buildingName;
-
-    selected = buildings.find(b=>b.name===name) || null;
-
-    document.getElementById("buildingTitle").textContent =
-      name;
-
-    const info = {
-      "GEDUNG A":"Gedung utama bagian tengah, tiga lantai.",
-      "GEDUNG B":"Gedung utama bagian kiri, tiga lantai.",
-      "GEDUNG C":"Gedung utama bagian kanan, tiga lantai.",
-      "LAB IPA":"Bangunan laboratorium IPA satu lantai yang menyambung di belakang Gedung A.",
-      "GEDUNG KELAS 3 INTER 3 DAN 3 INTER 4":
-        "Satu bangunan satu lantai yang terdiri dari ruang kelas 3 INTER 3 dan 3 INTER 4.",
-      "MUSHOLA AKHWAT":
-        "Mushola Akhwat satu lantai yang menyatu dengan rangkaian bangunan kantin.",
-      "KANTIN":
-        "Kantin satu lantai yang menyatu dengan Mushola Akhwat."
-    };
-
-    document.getElementById("buildingInfo").textContent =
-      info[name] || "Area fasilitas sekolah.";
-  }
-);
-
-
-// ========================================
-// 19. SISTEM GHOST FLOOR
-// ========================================
-
-function setFloorAppearance(floor,isSelected) {
-
-  floor.traverse(object=>{
-
-    if(!object.isMesh || !object.material) return;
-
-    const materials = Array.isArray(object.material)
-      ? object.material
-      : [object.material];
-
-    materials.forEach(material=>{
-
-      if(isSelected) {
-        material.transparent = false;
-        material.opacity = 1;
-        material.depthWrite = true;
-      } else {
-        material.transparent = true;
-        material.opacity = 0.25;
-        material.depthWrite = false;
-      }
-
-      material.needsUpdate = true;
-    });
+   material.needsUpdate=true;
   });
+ });
 }
 
+function updateFloorDisplay(value){
 
-function updateFloorDisplay(value) {
+ buildings.forEach(b=>{
 
-  buildings.forEach(b=>{
+  b.floors.forEach((floor,i)=>{
 
-    b.floors.forEach((floor,i)=>{
+   floor.position.y=floor.userData.levelY;
 
-      floor.position.y = floor.userData.levelY;
-
-      if(value==="all") {
-        setFloorAppearance(floor,true);
-      } else {
-        setFloorAppearance(
-          floor,
-          Number(value)===i+1
-        );
-      }
-    });
-
-    b.roof.visible = value==="all";
+   setFloorAppearance(
+    floor,
+    value==="all"||Number(value)===i+1
+   );
   });
 
-  const title = document.getElementById("buildingTitle");
-  const info = document.getElementById("buildingInfo");
+  b.roof.visible=value==="all";
+ });
 
-  title.textContent = "Digital Campus";
+ document.getElementById("buildingTitle").textContent="Digital Campus";
 
-  info.textContent = value==="all"
-    ? "Seluruh lantai gedung ditampilkan."
-    : "Lantai "+value+
-      " ditampilkan normal, lantai lainnya transparan.";
+ document.getElementById("buildingInfo").textContent=
+  value==="all"
+   ?"Seluruh lantai gedung ditampilkan."
+   :"Lantai "+value+" ditampilkan normal, lantai lainnya transparan.";
 }
 
-
-document.getElementById("floorSelect")
-.addEventListener("change",e=>{
-  updateFloorDisplay(e.target.value);
+document.getElementById("floorSelect").addEventListener("change",e=>{
+ updateFloorDisplay(e.target.value);
 });
 
-
-// ========================================
+// ======================================
 // 20. RESET TAMPILAN
-// ========================================
+// ======================================
 
 document.getElementById("resetView").onclick=()=>{
 
-  controls.target.set(0,2,0);
-  camera.position.set(29,25,34);
-  controls.update();
+ controls.target.set(0,2,0);
+ camera.position.set(30,27,37);
+ controls.update();
 
-  document.getElementById("floorSelect").value="all";
-
-  updateFloorDisplay("all");
-
-  selected=null;
+ document.getElementById("floorSelect").value="all";
+ updateFloorDisplay("all");
 };
 
-
-// ========================================
+// ======================================
 // 21. ROTASI OTOMATIS
-// ========================================
+// ======================================
 
 document.getElementById("rotateButton").onclick=()=>{
 
-  autoRotate=!autoRotate;
+ autoRotate=!autoRotate;
 
-  document.getElementById("rotateButton").textContent =
-    "Putar otomatis: "+(autoRotate?"ON":"OFF");
+ document.getElementById("rotateButton").textContent=
+  "Putar otomatis: "+(autoRotate?"ON":"OFF");
 };
 
-
-// ========================================
+// ======================================
 // 22. ZOOM
-// ========================================
+// ======================================
 
 document.getElementById("zoomIn").onclick=()=>{
 
-  const offset =
-    camera.position.clone().sub(controls.target);
-
-  offset.multiplyScalar(0.88);
-
-  camera.position.copy(
-    controls.target.clone().add(offset)
-  );
+ const offset=camera.position.clone().sub(controls.target);
+ offset.multiplyScalar(0.88);
+ camera.position.copy(controls.target.clone().add(offset));
 };
 
 document.getElementById("zoomOut").onclick=()=>{
 
-  const offset =
-    camera.position.clone().sub(controls.target);
-
-  offset.multiplyScalar(1.12);
-
-  camera.position.copy(
-    controls.target.clone().add(offset)
-  );
+ const offset=camera.position.clone().sub(controls.target);
+ offset.multiplyScalar(1.12);
+ camera.position.copy(controls.target.clone().add(offset));
 };
 
-
-// ========================================
+// ======================================
 // 23. ANIMASI
-// ========================================
+// ======================================
 
-function animate() {
+function animate(){
 
-  requestAnimationFrame(animate);
+ requestAnimationFrame(animate);
 
-  if(autoRotate) {
+ if(autoRotate){
 
-    const offset =
-      camera.position.clone().sub(controls.target);
+  const offset=camera.position.clone().sub(controls.target);
 
-    offset.applyAxisAngle(
-      new THREE.Vector3(0,1,0),
-      0.003
-    );
+  offset.applyAxisAngle(new THREE.Vector3(0,1,0),0.003);
 
-    camera.position.copy(
-      controls.target.clone().add(offset)
-    );
-  }
+  camera.position.copy(controls.target.clone().add(offset));
+ }
 
-  controls.update();
-  renderer.render(scene,camera);
+ controls.update();
+ renderer.render(scene,camera);
 }
 
 animate();
 
-
-// ========================================
+// ======================================
 // 24. RESPONSIVE
-// ========================================
+// ======================================
 
 window.addEventListener("resize",()=>{
 
-  camera.aspect =
-    window.innerWidth/window.innerHeight;
+ camera.aspect=window.innerWidth/window.innerHeight;
+ camera.updateProjectionMatrix();
 
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
-  );
+ renderer.setSize(window.innerWidth,window.innerHeight);
 });
 
 </script>
