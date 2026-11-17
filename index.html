@@ -14,12 +14,22 @@ button,select{width:100%;margin-top:7px;padding:10px;border:1px solid #3b6688;bo
 .controls{position:fixed;z-index:5;right:16px;bottom:16px;width:145px}.hint{position:fixed;z-index:4;left:16px;bottom:14px;font-size:11px;color:#e0edf6;text-shadow:0 1px 3px #345}
 #activityList{margin:8px 0 0;padding:0;list-style:none}#activityList li{padding:7px 0;border-top:1px solid #315574;font-size:11px;line-height:1.4;color:#d7e7f3}
 @media(max-width:650px){header{height:58px;padding:0 10px}.brand{font-size:14px}.subtitle{font-size:9px}.panel{top:68px;left:8px;width:190px;padding:10px}.panel p{font-size:11px}.controls{right:8px;bottom:8px;width:118px}.hint{left:8px;bottom:8px;max-width:52%;font-size:10px}}
+
+.panel-toggle{position:fixed;z-index:7;top:84px;left:16px;width:auto;min-width:112px;margin:0;padding:10px 13px;border:1px solid #4a7899;border-radius:9px;background:#123654;color:#fff;box-shadow:0 5px 18px #0004;font-weight:700}
+.panel.is-hidden{display:none}
+@media(max-width:650px){
+ .panel{top:68px;left:8px;width:min(84vw,290px);max-height:calc(100dvh - 88px);padding:12px}
+ .panel-toggle{top:auto;left:10px;bottom:14px;min-width:92px;padding:10px 12px}
+ .controls{right:8px;bottom:10px;width:116px}
+ .hint{left:10px;bottom:62px;max-width:58%;font-size:10px}
+}
 </style>
 </head>
 <body>
 <div id="scene"></div>
 <header><div><div class="brand">AL-WILDAN 14 <span>DIGITAL CAMPUS</span></div><div class="subtitle">Bumi Mutiara · Kampus 3 lantai interaktif</div></div><div style="font-size:11px;color:#9ec6df">3D CAMPUS</div></header>
-<aside class="panel">
+<button id="panelToggle" class="panel-toggle" aria-expanded="true" aria-controls="infoPanel">Tutup info ×</button>
+<aside class="panel" id="infoPanel">
  <h3 id="title">AL-WILDAN DIGITAL CAMPUS</h3>
  <p id="description">Pilih lantai, lalu klik ruang pada model 3D untuk melihat informasi dan kegiatan.</p>
  <label class="meta" for="floorSelect">PILIH LANTAI</label>
@@ -56,7 +66,7 @@ const roomData={
 ["Kelas 3 INTER 3",783,309,854,369,"class"],["Kelas 3 INTER 4",854,309,925,369,"class"],["Kantin",920,374,1008,475,"facility"],["Mushola Akhwat",920,475,1008,704,"facility"],
 ["Ruang PPDB",679,490,750,563,"facility"],["Kelas 2 INTER 4",750,490,821,563,"class"],["Ruang Manajemen",821,490,870,543,"facility"],["Ruang Finance",870,490,920,543,"facility"],["Toilet kanan",870,543,920,578,"toilet"],["Tangga kanan",832,578,922,609,"stair"],
 ["Kelas 1 INTER 2",679,609,750,680,"class"],["Kelas 2 INTER 3",750,609,821,680,"class"],["Kelas 4 INTER 3",821,609,891,680,"class"],
-["Lobi Sekolah",238,662,704,955,"lobby"],["Pos Security",575,885,647,955,"facility"],["Lapangan utama",258,421,659,646,"court"],["Lapangan kecil",679,369,888,475,"court"]
+["Lobi Sekolah",238,646,704,955,"lobby"],["Pos Security",575,885,647,955,"facility"],["Lapangan utama",258,421,659,646,"court"],["Lapangan kecil",679,369,888,475,"court"]
 ],
 2:[
 ["Ruang Administrasi",29,477,105,565,"facility"],["Tangga kiri lantai 2",29,565,105,626,"stair"],["Kelas 6 INTER 2",116,477,205,565,"class"],["Kelas 10 DI 1",29,675,117,763,"class"],["Kelas 11 DI 1",117,675,205,763,"class"],
@@ -102,9 +112,37 @@ function makeLabel(text,x,y,z){
  campus.add(s);labels.push(s);return s;
 }
 function box(parent,x,y,z,sx,sy,sz,mat,name){const m=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;if(name)m.userData.roomName=name;parent.add(m);return m}
+function makeGableRoof(parent,cx,y,cz,w,d,name){
+ const roofGroup=new THREE.Group();
+ const rise=Math.min(0.75,Math.max(0.28,d*0.22));
+ const halfDepth=d/2;
+ const slopeLength=Math.sqrt(halfDepth*halfDepth+rise*rise);
+ const angle=Math.atan2(rise,halfDepth);
+ const roofMaterial=new THREE.MeshStandardMaterial({color:0x354c60,roughness:.82,metalness:.04});
+ const eaveY=y+2.02+rise/2;
+ const front=box(roofGroup,0,eaveY,d/4,w+.28,.16,slopeLength,roofMaterial,name);
+ front.rotation.x=angle;
+ const back=box(roofGroup,0,eaveY,-d/4,w+.28,.16,slopeLength,roofMaterial,name);
+ back.rotation.x=-angle;
+ // Nok at tengah dan lis tepi atap
+ box(roofGroup,0,y+2.02+rise,0,w+.34,.12,.16,new THREE.MeshStandardMaterial({color:0x263b4d}),name);
+ roofGroup.position.set(cx,0,cz);
+ parent.add(roofGroup);
+ roofObjects.push(roofGroup);
+ return roofGroup;
+}
+
 function makeRoom(g,floor,name,x1,z1,x2,z2,type){
  const cx=pxX((x1+x2)/2),cz=pxZ((z1+z2)/2),w=(x2-x1)*SCALE,d=(z2-z1)*SCALE,y=(floor-1)*FLOOR_H;
  const base=box(g,cx,y+.12,cz,w,.24,d,materials[type]||materials.class,name);clickable.push(base);
+
+ // Lobi sekolah adalah area terbuka: tanpa dinding pembatas dan tanpa atap.
+ // Permukaan lantainya disambungkan langsung ke tepi lapangan utama.
+ if(name==="Lobi Sekolah"){
+   makeLabel(name,cx,y+.72,cz);
+   return;
+ }
+
  const wallH=1.55,t=.10;
  box(g,cx,y+.24+wallH/2,cz-d/2,w,wallH,t,materials.wall);
  box(g,cx-w/2,y+.24+wallH/2,cz,t,wallH,d,materials.wall);
@@ -112,13 +150,41 @@ function makeRoom(g,floor,name,x1,z1,x2,z2,type){
  // Front wall with a central doorway opening
  const gap=Math.min(1.0,w*.28),side=(w-gap)/2;
  if(side>.08){box(g,cx-(gap+side)/2,y+.24+wallH/2,cz+d/2,side,wallH,t,materials.wall);box(g,cx+(gap+side)/2,y+.24+wallH/2,cz+d/2,side,wallH,t,materials.wall)}
- const roof=box(g,cx,y+2.02,cz,w+.10,.12,d+.10,materials.roof,name);roofObjects.push(roof);
- makeLabel(name,cx,y+2.25,cz);
+ makeGableRoof(g,cx,y,cz,w,d,name);
+ makeLabel(name,cx,y+2.45,cz);
 }
 function addCourt(floor,name,x1,z1,x2,z2){const y=(floor-1)*FLOOR_H;const cx=pxX((x1+x2)/2),cz=pxZ((z1+z2)/2),w=(x2-x1)*SCALE,d=(z2-z1)*SCALE;const m=box(floorGroups[floor],cx,y+.12,cz,w,.24,d,materials.court,name);clickable.push(m);makeLabel(name,cx,y+.65,cz)}
 // Overall site pad
 box(campus,0,-.28,0,39,.45,27,materials.ground);
 for(let f=1;f<=3;f++){floorGroups[f]=new THREE.Group();campus.add(floorGroups[f]);for(const r of roomData[f]){if(r[5]==="court"){addCourt(f,r[0],r[1],r[2],r[3],r[4]);continue}makeRoom(floorGroups[f],f,r[0],r[1],r[2],r[3],r[4],r[5])}}
+
+/* GERBANG UTAMA SEKOLAH
+   Ditempatkan di sisi depan kampus, berdekatan dengan Pos Security.
+   Gerbang memiliki dua pilar, balok nama, dan kanopi atap pelana. */
+{
+ const gate=floorGroups[1];
+ const gx=pxX((388+555)/2);
+ const gz=pxZ(974);
+ const gateWidth=(555-388)*SCALE;
+ const pillarMat=new THREE.MeshStandardMaterial({color:0xf0eee7,roughness:.75});
+ const accentMat=new THREE.MeshStandardMaterial({color:0x1d5b87,roughness:.65});
+ box(gate,gx-gateWidth/2+.12,.95,gz,.34,1.9,.38,pillarMat,"Gerbang Utama");
+ box(gate,gx+gateWidth/2-.12,.95,gz,.34,1.9,.38,pillarMat,"Gerbang Utama");
+ box(gate,gx,1.92,gz,gateWidth,.34,.42,accentMat,"Gerbang Utama");
+ // Kanopi gerbang dibuat sebagai atap pelana kecil.
+ const canopy=new THREE.Group();
+ const rise=.42, half=1.0, slope=Math.sqrt(half*half+rise*rise), angle=Math.atan2(rise,half);
+ const roofMat=new THREE.MeshStandardMaterial({color:0x354c60,roughness:.82});
+ const a=box(canopy,0,1.98,.5,gateWidth+.28,.14,slope,roofMat,"Atap Gerbang");
+ a.rotation.x=angle;
+ const b=box(canopy,0,1.98,-.5,gateWidth+.28,.14,slope,roofMat,"Atap Gerbang");
+ b.rotation.x=-angle;
+ box(canopy,0,2.4,0,gateWidth+.32,.12,.14,accentMat,"Nok Atap Gerbang");
+ canopy.position.set(gx,0,gz);
+ gate.add(canopy);
+ roofObjects.push(canopy);
+ makeLabel("GERBANG UTAMA",gx,2.75,gz);
+}
 /* Pelat lantai transparan dihapus agar tidak membentuk bidang putih bertumpuk.
    Lantai ruang tetap dibentuk oleh permukaan masing-masing ruang. */
 function updateFloors(v){
@@ -150,6 +216,15 @@ function valueOf(row,keys){for(const k of keys){if(row[k]!==undefined&&row[k]!==
 function showActivities(roomName){const list=document.getElementById("activityList");list.innerHTML="";const matches=scheduleRows.filter(r=>{const loc=valueOf(r,["location","room","room_name","ruang","lokasi","location_name"]);return loc.toLowerCase()===roomName.toLowerCase()||loc.toLowerCase().includes(roomName.toLowerCase())||roomName.toLowerCase().includes(loc.toLowerCase())&&loc.length>2});if(!matches.length){const li=document.createElement("li");li.textContent="Belum ada jadwal yang cocok untuk ruang ini pada data yang berhasil dibaca.";list.appendChild(li);return}matches.forEach(r=>{const li=document.createElement("li");const act=valueOf(r,["activity","activity_name","program","subject","kegiatan","name"])||"Kegiatan";const cls=valueOf(r,["class","class_name","kelas","group"]);const day=valueOf(r,["day","day_name","hari"]);const time=valueOf(r,["time","time_range","jam","start_time"]);li.textContent=[act,cls,day,time].filter(Boolean).join(" · ");list.appendChild(li)})}
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 renderer.domElement.addEventListener("click",e=>{const rect=renderer.domElement.getBoundingClientRect();pointer.x=((e.clientX-rect.left)/rect.width)*2-1;pointer.y=-((e.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(clickable,false);if(!hits.length)return;const obj=hits[0].object,name=obj.userData.roomName||"Ruang";if(selected)selected.material.emissive?.setHex(0);selected=obj;selected.material.emissive?.setHex(0x244466);document.getElementById("title").textContent=name;document.getElementById("description").textContent="Ruang dipilih pada model 3D. Informasi aktivitas ditampilkan jika tersedia pada database jadwal.";showActivities(name)});
+
+// Panel informasi dapat ditutup untuk memberi ruang lebih luas pada tampilan 3D.
+const infoPanel=document.getElementById("infoPanel");
+const panelToggle=document.getElementById("panelToggle");
+panelToggle.addEventListener("click",()=>{
+ const isHidden=infoPanel.classList.toggle("is-hidden");
+ panelToggle.textContent=isHidden?"Buka info ☰":"Tutup info ×";
+ panelToggle.setAttribute("aria-expanded",String(!isHidden));
+});
 function animate(){requestAnimationFrame(animate);if(autoRotate){const v=camera.position.clone().sub(controls.target);v.applyAxisAngle(new THREE.Vector3(0,1,0),.0018);camera.position.copy(controls.target).add(v)}controls.update();renderer.render(scene,camera)}animate();
 addEventListener("resize",()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
 loadActivities();
