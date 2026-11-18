@@ -24,12 +24,8 @@ button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px
 #status{color:#9bd3ff}
 @media(max-width:700px){#world{scale:.5}#panel{max-width:200px;font-size:10px}}
 
-.window-detail{position:absolute;background:#bfe9ff;border:1px solid #16374c;opacity:.95;box-shadow:inset 0 0 3px #fff8;pointer-events:none}
-.door-detail{position:absolute;background:#5b3922;border:1px solid #25170d;pointer-events:none}
-.facade-line{position:absolute;background:#28313b;opacity:.7;pointer-events:none}
-.room.detail-ready{overflow:visible}
 </style></head><body>
-<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V9</h1><span>Layout V2 · tanpa library eksternal</span></header>
+<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V10</h1><span>Layout V2 · tanpa library eksternal</span></header>
 <div id="stage"><div id="world"><div id="site"></div>
 <!-- Outside zones -->
 <div class="outside" style="left:0;top:280px;width:282px;height:232px"></div><div class="outside" style="left:544px;top:312px;width:240px;height:199px"></div>
@@ -68,7 +64,7 @@ button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px
 <div class="room" style="left:294px;top:455px;width:132px;height:56px;background:#eee;color:#111">GERBANG MASUK</div>
 <div class="room" style="left:443px;top:455px;width:56px;height:56px;background:#55f58b;color:#111">POS SECURITY</div>
 </div></div>
-<div id="panel"><b>V9 — DETAIL FASAD DAN BUKAAN</b><p>V9 menambahkan detail pintu dan jendela sederhana pada blok ruang. Posisi layout V2 dipertahankan.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah.</p></div>
+<div id="panel"><b>V10 — GEOMETRI BERSIH</b><p>V10 menghapus detail pintu/jendela yang menimbulkan artefak melayang. Fokus pada geometri blok yang bersih; layout V2 tetap dipertahankan.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah.</p></div>
 <div id="controls"><button id="top">Tampak Atas</button><button id="iso">Isometrik</button><button id="reset">Reset</button><button id="rotate">Putar</button></div>
 <script>
 const world=document.getElementById('world');let rot=false,timer=null;
@@ -85,31 +81,6 @@ document.querySelectorAll('.room:not(.court)').forEach((room)=>{
     layer.style.zIndex='1';
     room.parentNode.insertBefore(layer,room);
   }
-});
-// Detail fasad ringan: penanda jendela/pintu di sisi depan blok, bukan perubahan denah.
-document.querySelectorAll('.room.top-face:not(.court)').forEach((room,idx)=>{
-  room.classList.add('detail-ready');
-  const w=Math.max(12,Math.min(24,room.offsetWidth*.22));
-  const h=7;
-  // Two window accents near lower/front edge of each room block
-  [0.28,0.68].forEach((ratio)=>{
-    const win=document.createElement('div');
-    win.className='window-detail';
-    win.style.width=w+'px';win.style.height=h+'px';
-    win.style.left=(room.offsetWidth*ratio-w/2)+'px';
-    win.style.bottom='2px';
-    win.style.transform='translateZ(31px)';
-    room.appendChild(win);
-  });
-  // Door marker centered, simplified and visually distinct
-  const door=document.createElement('div');
-  door.className='door-detail';
-  door.style.width=Math.max(9,Math.min(15,room.offsetWidth*.14))+'px';
-  door.style.height='12px';
-  door.style.left=(room.offsetWidth/2-door.offsetWidth/2)+'px';
-  door.style.top='2px';
-  door.style.transform='translateZ(31px)';
-  room.appendChild(door);
 });
 function darken(rgb,factor){
   const m=rgb.match(/\d+/g); if(!m||m.length<3)return '#333';
