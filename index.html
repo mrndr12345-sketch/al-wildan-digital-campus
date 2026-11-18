@@ -12,9 +12,7 @@ h1{font-size:17px;margin:0}#stage{position:absolute;inset:55px 0 0;overflow:hidd
 .top{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:3px;font-size:10px;font-weight:bold;color:#101820;border:1px solid #18202a;backface-visibility:hidden}
 .side{position:absolute;background:var(--side);transform-origin:top;left:0;top:100%;width:100%;height:var(--h);transform:rotateX(90deg);border:1px solid #222}
  .room{position:absolute;border:1px solid #26323b;display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;font-weight:bold;padding:2px;color:#101820;transform-style:preserve-3d}
- .wall-mass{position:absolute!important;left:0;top:0;display:block!important;padding:0!important;border:0!important;outline:0!important;box-shadow:none!important;transform-style:preserve-3d;pointer-events:none;z-index:0}
-.room.top-face{z-index:2;transform:translateZ(28px);border:1px solid #18202a}
-
+.extruded-layer{position:absolute!important;left:0;top:0;display:block!important;padding:0!important;border:0!important;outline:0!important;box-shadow:none!important;transform-style:preserve-3d;pointer-events:none;z-index:0}
 .room.top-face{z-index:2;transform:translateZ(28px)}
 .room.top-face .label{position:relative;z-index:2}
 
@@ -27,7 +25,7 @@ button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px
 @media(max-width:700px){#world{scale:.5}#panel{max-width:200px;font-size:10px}}
 
 </style></head><body>
-<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V11</h1><span>Layout V2 · tanpa library eksternal</span></header>
+<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V12</h1><span>Layout V2 · tanpa library eksternal</span></header>
 <div id="stage"><div id="world"><div id="site"></div>
 <!-- Outside zones -->
 <div class="outside" style="left:0;top:280px;width:282px;height:232px"></div><div class="outside" style="left:544px;top:312px;width:240px;height:199px"></div>
@@ -66,23 +64,23 @@ button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px
 <div class="room" style="left:294px;top:455px;width:132px;height:56px;background:#eee;color:#111">GERBANG MASUK</div>
 <div class="room" style="left:443px;top:455px;width:56px;height:56px;background:#55f58b;color:#111">POS SECURITY</div>
 </div></div>
-<div id="panel"><b>V11 — STRUKTUR DINDING</b><p>V11 mengganti tumpukan lapisan dengan satu massa sisi yang halus dan bidang atas terpisah. Layout V2 dipertahankan; pintu, jendela, dan atap belum ditambahkan.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah. Dinding sisi dibuat satu massa halus.</p></div>
+<div id="panel"><b>V12 — BASELINE GEOMETRI STABIL</b><p>V12 kembali ke metode geometri V10 yang tampil stabil setelah metode dinding V11 menghasilkan bidang bergeser. Layout V2 dipertahankan; detail arsitektur belum ditambahkan.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah.</p></div>
 <div id="controls"><button id="top">Tampak Atas</button><button id="iso">Isometrik</button><button id="reset">Reset</button><button id="rotate">Putar</button></div>
 <script>
 const world=document.getElementById('world');let rot=false,timer=null;
-// V11: satu massa sisi halus per ruang (tanpa garis lapisan bertumpuk).
+// Extrude room blocks: stacked darker layers below the top face, no external library.
 document.querySelectorAll('.room:not(.court)').forEach((room)=>{
   const base=getComputedStyle(room).backgroundColor;
   room.classList.add('top-face');
-  const mass=room.cloneNode(false);
-  mass.textContent='';
-  mass.className='room wall-mass';
-  mass.style.background=`linear-gradient(to bottom, ${darken(base,.18)}, ${darken(base,.48)})`;
-  mass.style.transform='translateZ(0px)';
-  mass.style.height=room.offsetHeight+'px';
-  mass.style.width=room.offsetWidth+'px';
-  mass.style.zIndex='1';
-  room.parentNode.insertBefore(mass,room);
+  for(let i=1;i<=14;i++){
+    const layer=room.cloneNode(false);
+    layer.textContent='';
+    layer.className='room extruded-layer';
+    layer.style.backgroundColor=darken(base, Math.min(.72, i*.035));
+    layer.style.transform=`translateZ(${28-i*2}px)`; layer.style.border='0'; layer.style.outline='0';
+    layer.style.zIndex='1';
+    room.parentNode.insertBefore(layer,room);
+  }
 });
 function darken(rgb,factor){
   const m=rgb.match(/\d+/g); if(!m||m.length<3)return '#333';
