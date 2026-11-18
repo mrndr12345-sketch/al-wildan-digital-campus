@@ -24,8 +24,10 @@ button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px
 #status{color:#9bd3ff}
 @media(max-width:700px){#world{scale:.5}#panel{max-width:200px;font-size:10px}}
 
+ 
+.perimeter-wall{position:absolute;pointer-events:none;z-index:3;box-sizing:border-box;border:1px solid rgba(20,25,32,.85);background:linear-gradient(180deg,rgba(35,45,55,.95),rgba(12,16,20,.98));}
 </style></head><body>
-<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V13</h1><span>Layout V2 · tanpa library eksternal</span></header>
+<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V14</h1><span>Layout V2 · tanpa library eksternal</span></header>
 <div id="stage"><div id="world"><div id="site"></div>
 <!-- Outside zones -->
 <div class="outside" style="left:0;top:280px;width:282px;height:232px"></div><div class="outside" style="left:544px;top:312px;width:240px;height:199px"></div>
@@ -64,7 +66,7 @@ button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px
 <div class="room" style="left:294px;top:455px;width:132px;height:56px;background:#eee;color:#111">GERBANG MASUK</div>
 <div class="room" style="left:443px;top:455px;width:56px;height:56px;background:#55f58b;color:#111">POS SECURITY</div>
 </div></div>
-<div id="panel"><b>V13 — UJI EKSTRUSI GEDUNG B</b><p>V13 menguji ekstrusi sisi hanya pada zona Gedung B (oranye). Zona A dan C tetap bidang datar sebagai pembanding. Layout V2 tidak diubah; belum ada pintu, jendela, atau atap.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah. V13: ekstrusi hanya zona B.</p></div>
+<div id="panel"><b>V14 — UJI DINDING PERIMETER</b><p>V14 menguji dinding perimeter tipis pada tepi blok ruang, tanpa tumpukan layer. Bidang atas/layout V2 tetap menjadi acuan; pintu, jendela, dan atap belum ditambahkan.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah.</p></div>
 <div id="controls"><button id="top">Tampak Atas</button><button id="iso">Isometrik</button><button id="reset">Reset</button><button id="rotate">Putar</button></div>
 <script>
 const world=document.getElementById('world');let rot=false,timer=null;
@@ -72,8 +74,6 @@ const world=document.getElementById('world');let rot=false,timer=null;
 document.querySelectorAll('.room:not(.court)').forEach((room)=>{
   const base=getComputedStyle(room).backgroundColor;
   room.classList.add('top-face');
-  const isGedungB = base.includes('255, 173, 46') || base.includes('255, 173, 46');
-  if(!isGedungB) return; // zona A/C dan fasilitas non-oranye tetap flat untuk pembanding
   for(let i=1;i<=14;i++){
     const layer=room.cloneNode(false);
     layer.textContent='';
@@ -83,6 +83,21 @@ document.querySelectorAll('.room:not(.court)').forEach((room)=>{
     layer.style.zIndex='1';
     room.parentNode.insertBefore(layer,room);
   }
+});
+// V14 experiment: perimeter wall strips are anchored to each room block edge.
+document.querySelectorAll('.room:not(.court)').forEach((room)=>{
+  const w=room.offsetWidth, h=room.offsetHeight;
+  const strips=[
+    {left:0,top:0,width:w,height:4},
+    {left:0,top:h-4,width:w,height:4},
+    {left:0,top:0,width:4,height:h},
+    {left:w-4,top:0,width:4,height:h}
+  ];
+  strips.forEach(st=>{
+    const wall=document.createElement('div'); wall.className='perimeter-wall';
+    Object.assign(wall.style,st);
+    room.appendChild(wall);
+  });
 });
 function darken(rgb,factor){
   const m=rgb.match(/\d+/g); if(!m||m.length<3)return '#333';
