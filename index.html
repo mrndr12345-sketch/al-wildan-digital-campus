@@ -313,7 +313,6 @@ function updateFloors(v){
 }
 let roofVisible=true,labelsVisible=true,autoRotate=false,topView=false,selected=null;
 updateFloors("all");
-setMode("kawasan");
 document.getElementById("floorSelect").addEventListener("change",e=>{updateFloors(e.target.value);document.getElementById("title").textContent=e.target.value==="all"?"Seluruh Lantai":`Lantai ${e.target.value}`;document.getElementById("description").textContent="Pilih ruang pada model untuk melihat informasi dan jadwal kegiatan."});
 document.getElementById("roofBtn").onclick=()=>{roofVisible=!roofVisible;document.getElementById("roofBtn").textContent="Atap: "+(roofVisible?"tampil":"sembunyi");updateFloors(document.getElementById("floorSelect").value)};
 document.getElementById("labelsBtn").onclick=()=>{labelsVisible=!labelsVisible;labels.forEach(l=>l.visible=labelsVisible);document.getElementById("labelsBtn").textContent="Label: "+(labelsVisible?"ON":"OFF")};
@@ -372,6 +371,7 @@ function setMode(mode){
  controls.update();
 }
 modeButtons.forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+setMode("kawasan");
 document.getElementById("tourBtn").onclick=()=>{
  tourOn=!tourOn;autoRotate=tourOn;
  document.getElementById("tourBtn").innerHTML=tourOn?'<span>■</span> Hentikan Tur':'<span>▶</span> Putar Tur';
