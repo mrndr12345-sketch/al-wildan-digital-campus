@@ -1,27 +1,71 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AL-WILDAN DIGITAL CAMPUS — Rekonstruksi 3D Lantai 1 V3</title><style>html,body{margin:0;background:#090909;color:#fff;font-family:Arial;overflow:hidden}#scene{position:absolute;inset:0}header{position:fixed;top:0;left:0;right:0;padding:12px 20px;background:#090909dd;z-index:3;display:flex;justify-content:space-between;align-items:center}h1{font-size:17px;margin:0}small{color:#bbb}#panel{position:fixed;top:75px;left:16px;z-index:3;background:#111d;border:1px solid #444;border-radius:12px;padding:14px;max-width:260px;font-size:12px;line-height:1.45}button{background:#222;color:white;border:1px solid #555;border-radius:8px;padding:8px;margin:4px;cursor:pointer}#controls{position:fixed;right:14px;bottom:14px;z-index:3}#status{color:#c9c9c9}</style></head><body><div id="scene"></div><header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI 3D LANTAI 1 V5 FIX</h1><small>Layout V2 sebagai acuan geometri · Lantai 1 saja</small></header><div id="panel"><b>REVISI GEOMETRIS V5</b><p>Susunan ruang diturunkan dari layout 2D V2 yang disetujui. Ini model teknis untuk validasi posisi—bukan render AI bebas.</p><div id="status">Kawasan · Lantai 1</div><p><b>Legenda:</b><br>🟦 Tangga ke lantai 2<br>🟩 Lapangan<br>🟧 Gedung B<br>🟦 Gedung A<br>🟥 Gedung C<br>Area hitam = luar sekolah</p></div><div id="controls"><button id="reset">Reset Kamera</button><button id="top">Tampak Atas</button><button id="orbit">Putar</button></div><script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.152.2/examples/jsm/controls/OrbitControls.js';
-const data=[["Mushola Ikhwan", 69, 167, 189, 357, "facility"], ["Toilet", 13, 235, 69, 338, "toilet"], ["Lab Komputer", 13, 358, 69, 414, "facility"], ["Kelas 9 AE1", 69, 358, 130, 414, "class"], ["Kelas 12 DI1", 130, 358, 190, 414, "class"], ["Tangga Lantai 2 - B", 74, 286, 138, 357, "stair"], ["Lab IPA", 204, 135, 260, 167, "facility"], ["Kelas 3 INTER 1", 204, 167, 260, 224, "class"], ["Kelas 2 INTER 2", 260, 167, 316, 224, "class"], ["Kelas 2 INTER 1", 316, 167, 372, 224, "class"], ["Kelas 1 INTER 1", 372, 167, 427, 224, "class"], ["Tangga Lantai 2 - A", 427, 167, 465, 224, "stair"], ["Toilet A", 465, 167, 521, 224, "toilet"], ["Kelas 3 INTER 3", 619, 135, 675, 192, "class"], ["Kelas 3 INTER 4", 675, 135, 732, 192, "class"], ["Lapangan Kecil", 537, 192, 702, 264, "court"], ["Kantin", 727, 187, 797, 266, "facility"], ["Ruang PPDB", 537, 278, 594, 335, "facility"], ["Kelas 1 INTER 4", 594, 278, 649, 335, "class"], ["Ruang Manajemen", 649, 278, 707, 335, "facility"], ["Ruang Finance", 707, 278, 727, 335, "facility"], ["Kelas 1 INTER 2", 537, 372, 594, 429, "class"], ["Kelas 2 INTER 3", 594, 372, 649, 429, "class"], ["Kelas 4 INTER 3", 649, 372, 727, 429, "class"], ["Tangga Lantai 2 - C", 658, 335, 727, 372, "stair"], ["Mushola Akhwat", 727, 266, 797, 438, "facility"], ["Lapangan Utama", 204, 224, 521, 401, "court"], ["Lobby / Area Terbuka", 295, 414, 557, 646, "lobby"], ["Gerbang Masuk", 307, 590, 439, 646, "gate"], ["Pos Security", 456, 590, 512, 646, "facility"]];
-try {
-document.getElementById('status').textContent='Memuat library 3D…';
-
-const scene=new THREE.Scene();scene.background=new THREE.Color(0x101010);scene.fog=new THREE.Fog(0x101010,65,120);const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,300);camera.position.set(28,30,32);const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.outputColorSpace=THREE.SRGBColorSpace;document.querySelector('#scene').appendChild(renderer.domElement);const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.target.set(0,0.7,0);controls.maxPolarAngle=Math.PI/2.02;scene.add(new THREE.HemisphereLight(0xffffff,0x5a5a5a,2));const sun=new THREE.DirectionalLight(0xffffff,2.2);sun.position.set(-20,30,20);sun.castShadow=true;scene.add(sun);
-const scale=.045, H=2.8, wallH=1.65, originX=401,originY=390;const worldX=x=>(x-originX)*scale,worldZ=y=>(y-originY)*scale;
-const mats={class:new THREE.MeshStandardMaterial({color:0x8eb8df}),facility:new THREE.MeshStandardMaterial({color:0xd7a443}),toilet:new THREE.MeshStandardMaterial({color:0x9daab3}),stair:new THREE.MeshStandardMaterial({color:0x245bff}),court:new THREE.MeshStandardMaterial({color:0x17b63e}),lobby:new THREE.MeshStandardMaterial({color:0xc8c8c8}),gate:new THREE.MeshStandardMaterial({color:0x8ca6b5}),wall:new THREE.MeshStandardMaterial({color:0xe5e3df}),outside:new THREE.MeshStandardMaterial({color:0x050505}),ground:new THREE.MeshStandardMaterial({color:0x292929}),roofB:new THREE.MeshStandardMaterial({color:0xc48a28}),roofA:new THREE.MeshStandardMaterial({color:0x3c83c4}),roofC:new THREE.MeshStandardMaterial({color:0xc52d42})};
-const campus=new THREE.Group();scene.add(campus);function box(x,y,z,w,h,d,mat,name){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;m.userData.name=name;campus.add(m);return m}
-// Site plane and excluded outside zones
-box(0,-.22,0,37,.4,24,mats.ground,'Site');box(worldX(154),.02,worldZ(530),worldX(295)-worldX(13),.08,worldZ(414)-worldZ(646),mats.outside,'Area luar kiri');box(worldX(677),.02,worldZ(546),worldX(797)-worldX(557),.08,worldZ(447)-worldZ(646),mats.outside,'Area luar kanan');
-const roomMeshes=[];for(const r of data){let [name,x1,y1,x2,y2,type]=r;const x=worldX((x1+x2)/2),z=worldZ((y1+y2)/2),w=(x2-x1)*scale,d=(y2-y1)*scale;const floor=box(x,.04,z,w,.12,d,mats[type]||mats.class,name);roomMeshes.push(floor);if(type==='court'||type==='lobby'||type==='gate')continue;const wallMat=mats.wall;const t=.09;box(x,wallH/2,z-d/2,w,wallH,t,wallMat,name+' wall');box(x,wallH/2,z+d/2,w,wallH,t,wallMat,name+' wall');box(x-w/2,wallH/2,z,t,wallH,d,wallMat,name+' wall');box(x+w/2,wallH/2,z,t,wallH,d,wallMat,name+' wall');if(type==='stair'){for(let i=0;i<8;i++){box(x-w/2+.1+i*(w-.2)/8,.15+i*.13,z,d*.25, .12, d*.65,new THREE.MeshStandardMaterial({color:0xeeeeee}),name+' tread')}}}
-// Roof blocks at top of rooms (only indicative, removable visual mass) for each building zone
-const roofs=[['B',69,167,190,414,3,mats.roofB],['A',204,135,521,224,2,mats.roofA],['C',537,135,797,438,3,mats.roofC]];for(const [key,x1,y1,x2,y2,floor,mat] of roofs){let x=worldX((x1+x2)/2),z=worldZ((y1+y2)/2),w=(x2-x1)*scale,d=(y2-y1)*scale;box(x,floor*H,z,w,.22,d,mat,'Roof '+key)}
-// gate/security markers
-const labelGroup=new THREE.Group();campus.add(labelGroup);function label(text,x,y,z){const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle='#111';ctx.fillRect(0,0,512,128);ctx.fillStyle='#e8c56a';ctx.font='bold 42px Arial';ctx.textAlign='center';ctx.fillText(text,256,76);const tex=new THREE.CanvasTexture(c);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,depthTest:false}));s.position.set(x,y,z);s.scale.set(5,1.25,1);labelGroup.add(s)}for(const r of data){const [name,x1,y1,x2,y2]=r;label(name,worldX((x1+x2)/2),2.1,worldZ((y1+y2)/2))}
-// Area boundaries
-const outline=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(37,.02,24)),new THREE.LineBasicMaterial({color:0x777777}));outline.position.y=.02;campus.add(outline);
-function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera)}animate();document.getElementById('status').textContent='3D berhasil dimuat · Kawasan · Lantai 1';window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});document.querySelector('#reset').onclick=()=>{camera.position.set(28,30,32);controls.target.set(0,0.8,0)};document.querySelector('#top').onclick=()=>{camera.position.set(0,45,0.01);controls.target.set(0,0.7,0)};let rotating=false;document.querySelector('#orbit').onclick=()=>{rotating=!rotating;document.querySelector('#status').textContent=rotating?'Auto orbit aktif':'Kawasan · Lantai 1';};} catch (err) {
-  console.error('Digital Campus 3D error:', err);
-  const status = document.getElementById('status');
-  status.textContent = 'Gagal memuat model 3D: ' + (err?.message || err);
-  document.getElementById('scene').innerHTML = '<div style="color:white;padding:110px 28px;font:16px Arial">Model 3D gagal dimuat.<br><br>Pesan: ' + (err?.message || err) + '<br><br>Pastikan internet aktif dan browser mendukung WebGL.</div>';
-}
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AL-WILDAN Digital Campus — Lantai 1 V6</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080b10;color:#eaf0f7;font-family:Arial,sans-serif;overflow:hidden}
+header{position:absolute;top:0;left:0;right:0;padding:12px 18px;background:#080b10e8;z-index:5;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:17px;margin:0}#stage{position:absolute;inset:55px 0 0;overflow:hidden;perspective:1100px;background:radial-gradient(#18202a,#07090c 75%)}
+#world{position:absolute;left:50%;top:53%;width:800px;height:520px;margin-left:-400px;margin-top:-260px;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(-35deg) scale(.75);transition:transform .35s}
+#site{position:absolute;inset:0;background:#252a30;border:3px solid #7d8790;transform:translateZ(-2px);box-shadow:0 0 0 1000px #050607}
+.outside{position:absolute;background:#050607;border:1px solid #111}
+.block{position:absolute;transform-style:preserve-3d;box-shadow:0 4px 10px #0008;border:1px solid #222}
+.top{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:3px;font-size:10px;font-weight:bold;color:#101820;border:1px solid #18202a;backface-visibility:hidden}
+.side{position:absolute;background:var(--side);transform-origin:top;left:0;top:100%;width:100%;height:var(--h);transform:rotateX(90deg);border:1px solid #222}
+.room{position:absolute;border:1px solid #26323b;display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;font-weight:bold;padding:2px;color:#101820}
+.court{background:#25b94b;color:#06220c;border:2px solid #111}
+.stair{background:#2563eb;color:white}
+#controls{position:absolute;bottom:14px;right:14px;z-index:6;display:flex;gap:6px;flex-wrap:wrap}
+button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px;padding:10px 12px;cursor:pointer}
+#panel{position:absolute;top:75px;left:14px;z-index:6;max-width:260px;background:#10151bdc;border:1px solid #4a5560;border-radius:12px;padding:12px;font-size:12px;line-height:1.5}
+#status{color:#9bd3ff}
+@media(max-width:700px){#world{scale:.5}#panel{max-width:200px;font-size:10px}}
+</style></head><body>
+<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V6</h1><span>Layout V2 · tanpa library eksternal</span></header>
+<div id="stage"><div id="world"><div id="site"></div>
+<!-- Outside zones -->
+<div class="outside" style="left:0;top:280px;width:282px;height:232px"></div><div class="outside" style="left:544px;top:312px;width:240px;height:199px"></div>
+<!-- court areas -->
+<div class="room court" style="left:191px;top:89px;width:317px;height:177px">LAPANGAN UTAMA</div>
+<div class="room court" style="left:524px;top:57px;width:165px;height:72px">LAPANGAN KECIL</div>
+<!-- B left zone -->
+<div class="room" style="left:56px;top:32px;width:120px;height:190px;background:#ffad2e">MUSHOLA IKHWAN</div>
+<div class="room" style="left:0;top:100px;width:56px;height:103px;background:#ffad2e">TOILET</div>
+<div class="room stair" style="left:61px;top:151px;width:64px;height:71px">TANGGA L2</div>
+<div class="room" style="left:0;top:223px;width:56px;height:56px;background:#ffad2e">LAB KOMPUTER</div>
+<div class="room" style="left:56px;top:223px;width:61px;height:56px;background:#ffad2e">9 AE1</div>
+<div class="room" style="left:117px;top:223px;width:60px;height:56px;background:#ffad2e">12 DI1</div>
+<!-- A zone -->
+<div class="room" style="left:191px;top:0;width:56px;height:32px;background:#8fc1ff">LAB IPA</div>
+<div class="room" style="left:191px;top:32px;width:56px;height:57px;background:#8fc1ff">3 INTER 1</div>
+<div class="room" style="left:247px;top:32px;width:56px;height:57px;background:#8fc1ff">2 INTER 2</div>
+<div class="room" style="left:303px;top:32px;width:56px;height:57px;background:#8fc1ff">2 INTER 1</div>
+<div class="room" style="left:359px;top:32px;width:55px;height:57px;background:#8fc1ff">1 INTER 1</div>
+<div class="room stair" style="left:414px;top:32px;width:38px;height:57px">TANGGA</div>
+<div class="room" style="left:452px;top:32px;width:56px;height:57px;background:#aaa">TOILET</div>
+<!-- C zone -->
+<div class="room" style="left:606px;top:0;width:56px;height:57px;background:#c8102e;color:white">3 INTER 3</div>
+<div class="room" style="left:662px;top:0;width:57px;height:57px;background:#c8102e;color:white">3 INTER 4</div>
+<div class="room" style="left:524px;top:143px;width:57px;height:57px;background:#c8102e;color:white">PPDB</div>
+<div class="room" style="left:581px;top:143px;width:55px;height:57px;background:#c8102e;color:white">1 INTER 4</div>
+<div class="room" style="left:636px;top:143px;width:58px;height:57px;background:#c8102e;color:white">MANAJ.</div>
+<div class="room" style="left:694px;top:143px;width:25px;height:57px;background:#c8102e;color:white">FIN.</div>
+<div class="room" style="left:524px;top:237px;width:57px;height:57px;background:#c8102e;color:white">1 INTER 2</div>
+<div class="room" style="left:581px;top:237px;width:55px;height:57px;background:#c8102e;color:white">2 INTER 3</div>
+<div class="room" style="left:636px;top:237px;width:83px;height:57px;background:#c8102e;color:white">4 INTER 3</div>
+<div class="room stair" style="left:645px;top:200px;width:74px;height:37px">TANGGA L2</div>
+<div class="room" style="left:714px;top:52px;width:70px;height:79px;background:#c8102e;color:white">KANTIN</div>
+<div class="room" style="left:714px;top:131px;width:70px;height:172px;background:#c8102e;color:white">MUSHOLA AKHWAT</div>
+<!-- front zone -->
+<div class="room" style="left:294px;top:455px;width:132px;height:56px;background:#eee;color:#111">GERBANG MASUK</div>
+<div class="room" style="left:443px;top:455px;width:56px;height:56px;background:#55f58b;color:#111">POS SECURITY</div>
+</div></div>
+<div id="panel"><b>V6 — VIEW GEOMETRI 2D/ISOMETRI</b><p>Versi ini tidak memanggil Three.js/CDN. Layout ditampilkan sebagai blok denah agar browser lokal tidak gagal karena library eksternal.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah.</p></div>
+<div id="controls"><button id="top">Tampak Atas</button><button id="iso">Isometrik</button><button id="reset">Reset</button><button id="rotate">Putar</button></div>
+<script>
+const world=document.getElementById('world');let rot=false,timer=null;
+function setTop(){world.style.transform='rotateX(0deg) rotateZ(0deg) scale(.85)';}
+function setIso(){world.style.transform='rotateX(58deg) rotateZ(-35deg) scale(.75)';}
+document.getElementById('top').onclick=setTop;document.getElementById('iso').onclick=setIso;document.getElementById('reset').onclick=setIso;
+document.getElementById('rotate').onclick=()=>{rot=!rot;if(rot){let a=-35;timer=setInterval(()=>{a+=1;world.style.transform=`rotateX(58deg) rotateZ(${a}deg) scale(.75)`},40);document.getElementById('status').textContent='Animasi putar aktif'}else{clearInterval(timer);document.getElementById('status').textContent='Denah siap ditampilkan';setIso()}};
+setIso();
 </script></body></html>
