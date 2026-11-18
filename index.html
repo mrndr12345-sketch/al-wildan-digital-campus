@@ -25,7 +25,7 @@ button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px
 @media(max-width:700px){#world{scale:.5}#panel{max-width:200px;font-size:10px}}
 
 </style></head><body>
-<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V12</h1><span>Layout V2 · tanpa library eksternal</span></header>
+<header><h1>AL-WILDAN DIGITAL CAMPUS — REKONSTRUKSI LANTAI 1 V13</h1><span>Layout V2 · tanpa library eksternal</span></header>
 <div id="stage"><div id="world"><div id="site"></div>
 <!-- Outside zones -->
 <div class="outside" style="left:0;top:280px;width:282px;height:232px"></div><div class="outside" style="left:544px;top:312px;width:240px;height:199px"></div>
@@ -64,7 +64,7 @@ button{background:#202832;color:white;border:1px solid #55616d;border-radius:8px
 <div class="room" style="left:294px;top:455px;width:132px;height:56px;background:#eee;color:#111">GERBANG MASUK</div>
 <div class="room" style="left:443px;top:455px;width:56px;height:56px;background:#55f58b;color:#111">POS SECURITY</div>
 </div></div>
-<div id="panel"><b>V12 — BASELINE GEOMETRI STABIL</b><p>V12 kembali ke metode geometri V10 yang tampil stabil setelah metode dinding V11 menghasilkan bidang bergeser. Layout V2 dipertahankan; detail arsitektur belum ditambahkan.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah.</p></div>
+<div id="panel"><b>V13 — UJI EKSTRUSI GEDUNG B</b><p>V13 menguji ekstrusi sisi hanya pada zona Gedung B (oranye). Zona A dan C tetap bidang datar sebagai pembanding. Layout V2 tidak diubah; belum ada pintu, jendela, atau atap.</p><div id="status">Denah siap ditampilkan</div><p>Warna biru = tangga Lantai 2. Area hitam = luar sekolah. V13: ekstrusi hanya zona B.</p></div>
 <div id="controls"><button id="top">Tampak Atas</button><button id="iso">Isometrik</button><button id="reset">Reset</button><button id="rotate">Putar</button></div>
 <script>
 const world=document.getElementById('world');let rot=false,timer=null;
@@ -72,6 +72,8 @@ const world=document.getElementById('world');let rot=false,timer=null;
 document.querySelectorAll('.room:not(.court)').forEach((room)=>{
   const base=getComputedStyle(room).backgroundColor;
   room.classList.add('top-face');
+  const isGedungB = base.includes('255, 173, 46') || base.includes('255, 173, 46');
+  if(!isGedungB) return; // zona A/C dan fasilitas non-oranye tetap flat untuk pembanding
   for(let i=1;i<=14;i++){
     const layer=room.cloneNode(false);
     layer.textContent='';
