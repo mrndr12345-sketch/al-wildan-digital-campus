@@ -202,6 +202,7 @@ function makeGableRoof(parent,cx,y,cz,w,d,name){
  // Nok at tengah dan lis tepi atap
  box(roofGroup,0,y+2.02+rise,0,w+.34,.12,.16,new THREE.MeshStandardMaterial({color:0x263b4d}),name);
  roofGroup.position.set(cx,0,cz);
+ roofGroup.userData.roofFloor=y/FLOOR_H+1;
  parent.add(roofGroup);
  roofObjects.push(roofGroup);
  return roofGroup;
@@ -225,7 +226,18 @@ function makeRoom(g,floor,name,x1,z1,x2,z2,type){
  // Front wall with a central doorway opening
  const gap=Math.min(1.0,w*.28),side=(w-gap)/2;
  if(side>.08){box(g,cx-(gap+side)/2,y+.24+wallH/2,cz+d/2,side,wallH,t,materials.wall);box(g,cx+(gap+side)/2,y+.24+wallH/2,cz+d/2,side,wallH,t,materials.wall)}
- makeGableRoof(g,cx,y,cz,w,d,name);
+ // Atap hanya dibuat pada lantai paling atas bangunan.
+ // Gedung B dan C: lantai 3. Gedung A (blok tengah): lantai 2.
+ // Fasilitas satu lantai tetap memiliki atap sendiri.
+ const singleFloorFacility = [
+   "Mushola Ikhwan","Lab Komputer","Lab IPA","Kantin","Mushola Akhwat",
+   "Ruang PPDB","Ruang Manajemen","Ruang Finance","Pos Security",
+   "Ruang Administrasi","Perpustakaan","UKS lantai 2","UKS lantai 3"
+ ].includes(name);
+ const isTopFloor = floor===3 || (floor===2 && cx>=pxX(228) && cx<=pxX(639));
+ if(isTopFloor || (floor===1 && singleFloorFacility)){
+   makeGableRoof(g,cx,y,cz,w,d,name);
+ }
  makeLabel(name,cx,y+2.45,cz);
 }
 function addCourt(floor,name,x1,z1,x2,z2){const y=(floor-1)*FLOOR_H;const cx=pxX((x1+x2)/2),cz=pxZ((z1+z2)/2),w=(x2-x1)*SCALE,d=(z2-z1)*SCALE;const m=box(floorGroups[floor],cx,y+.12,cz,w,.24,d,materials.court,name);clickable.push(m);makeLabel(name,cx,y+.65,cz)}
@@ -296,7 +308,7 @@ function updateFloors(v){
    setObjectOpacity(floorGroups[f],opacity);
  }
  roofObjects.forEach(o=>{
-   const ownerFloor=Math.round((o.position.y-2.02)/FLOOR_H)+1;
+   const ownerFloor=o.userData.roofFloor||1;
    const opacity=selectedFloor===null||selectedFloor===ownerFloor?1:0.14;
    o.visible=roofVisible;
    setObjectOpacity(o,opacity);
