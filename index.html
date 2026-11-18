@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AL-WILDAN 14 DIGITAL CAMPUS</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:#07182d;color:#fff}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:#080807;color:#fff}
 #scene{position:fixed;inset:0}header{position:fixed;z-index:5;top:0;left:0;right:0;height:68px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,20,39,.95);border-bottom:1px solid #244665}
 .brand{font-weight:800;font-size:19px;letter-spacing:.7px}.brand span{color:#35d6d0}.subtitle{font-size:11px;color:#a9c4dc;margin-top:4px}
 .panel{position:fixed;z-index:5;top:84px;left:16px;width:280px;max-height:calc(100vh - 105px);overflow:auto;padding:15px;border:1px solid #315574;border-radius:13px;background:rgba(7,26,48,.95);box-shadow:0 10px 35px #0005}
@@ -23,15 +23,74 @@ button,select{width:100%;margin-top:7px;padding:10px;border:1px solid #3b6688;bo
  .controls{right:8px;bottom:10px;width:116px}
  .hint{left:10px;bottom:62px;max-width:58%;font-size:10px}
 }
+
+/* REFERENCE-INSPIRED DIGITAL CAMPUS UI */
+header.topbar{height:60px;background:#050505;border:0;display:flex;gap:10px;justify-content:space-between;padding:4px 12px;align-items:center}
+.navtabs{display:flex;align-items:center;gap:4px;background:#111;border:1px solid #333;border-radius:32px;padding:4px;overflow:auto}
+.navtabs .tab{width:auto;margin:0;padding:11px 24px;border:0;border-radius:24px;background:transparent;color:#aaa;font-size:14px;white-space:nowrap}
+.navtabs .tab.active{background:#ededed;color:#111;font-weight:700}
+.tourtools{display:flex;align-items:center;gap:7px}
+.tourtools button{width:auto;margin:0;border:1px solid #393939;border-radius:30px;background:#151515;color:#eee;padding:11px 18px;font-weight:700}
+#tourBtn span{color:#e3b94f;margin-right:6px}
+#scene:after{content:"";position:fixed;inset:60px 0 0;pointer-events:none;z-index:1;background-image:linear-gradient(rgba(192,157,91,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(192,157,91,.045) 1px,transparent 1px);background-size:42px 42px}
+.panel{background:rgba(10,10,10,.92);border-color:#38342b;border-radius:14px;color:#eee}
+.panel h3{color:#eee;font-size:18px}
+.panel p,.meta{color:#b5b5b5}
+button,select{background:#171717;border-color:#3a3a3a;color:#f2f2f2}
+button:hover{background:#282828}
+.panel-toggle{background:#151515;border-color:#3b3b3b;color:#eee}
+.controls button{background:#151515;border-color:#393939}
+.hint{color:#ddd}
+.site-callout{position:fixed;z-index:3;top:24%;width:190px;pointer-events:none;background:rgba(12,12,12,.82);padding:12px 14px;border-radius:12px;letter-spacing:.6px}
+.site-callout strong{display:block;font-size:12px;letter-spacing:1.4px;color:#e6e1d5}
+.site-callout span{display:block;margin-top:4px;color:#aaa;font-size:12px;letter-spacing:0}
+.site-callout.left{left:22px}
+.site-callout.right{right:22px;text-align:right}
+.site-callout.gold strong{color:#e5c16a}
+.site-title{position:fixed;z-index:3;top:82px;left:28px;font-size:clamp(23px,3vw,38px);font-weight:800;letter-spacing:-1px;color:#eee;pointer-events:none}
+@media(max-width:700px){
+ header.topbar{height:auto;min-height:58px;padding:5px;flex-wrap:wrap}
+ .navtabs{width:100%;justify-content:space-between}
+ .navtabs .tab{padding:8px 10px;font-size:12px}
+ .tourtools{position:absolute;right:7px;top:58px}
+ .tourtools button{padding:8px 11px;font-size:11px}
+ .site-title{top:108px;left:14px;font-size:23px}
+ .site-callout{width:130px;padding:8px;top:auto;bottom:100px}
+ .site-callout strong{font-size:10px}
+ .site-callout span{font-size:10px}
+ .site-callout.left{left:8px}
+ .site-callout.right{right:8px}
+ .panel{top:145px;left:8px}
+ .panel-toggle{bottom:15px;top:auto;left:8px}
+ .controls{bottom:12px;right:8px}
+ .hint{display:none}
+}
 </style>
 </head>
 <body>
 <div id="scene"></div>
-<header><div><div class="brand">AL-WILDAN 14 <span>DIGITAL CAMPUS</span></div><div class="subtitle">Bumi Mutiara · Kampus 3 lantai interaktif</div></div><div style="font-size:11px;color:#9ec6df">3D CAMPUS</div></header>
+<div class="site-title" id="siteTitle">Kawasan sekolah</div>
+<div class="site-callout left" id="calloutLeft1"><strong>LAPANGAN UTAMA</strong><span>Area kegiatan sekolah</span></div>
+<div class="site-callout left gold" id="calloutLeft2"><strong>GERBANG MASUK</strong><span>Pos Security di area depan</span></div>
+<div class="site-callout right" id="calloutRight1"><strong>GEDUNG B</strong><span>3 lantai</span></div>
+<div class="site-callout right gold" id="calloutRight2"><strong>GEDUNG A / C</strong><span>Bangunan utama sekolah</span></div>
+<header class="topbar">
+ <nav class="navtabs" aria-label="Navigasi kampus">
+  <button class="tab active" data-mode="kawasan">Kawasan</button>
+  <button class="tab" data-mode="gedung">Gedung</button>
+  <button class="tab" data-mode="lantai">Per lantai</button>
+  <button class="tab" data-mode="ruang">Ruang kelas</button>
+ </nav>
+ <div class="tourtools">
+  <button id="navPrev" title="Sudut sebelumnya">←</button>
+  <button id="tourBtn"><span>▶</span> Putar Tur</button>
+  <button id="navNext" title="Sudut berikutnya">→</button>
+ </div>
+</header>
 <button id="panelToggle" class="panel-toggle" aria-expanded="true" aria-controls="infoPanel">Tutup info ×</button>
 <aside class="panel" id="infoPanel">
- <h3 id="title">AL-WILDAN DIGITAL CAMPUS</h3>
- <p id="description">Pilih lantai, lalu klik ruang pada model 3D untuk melihat informasi dan kegiatan.</p>
+ <h3 id="title">Kawasan sekolah</h3>
+ <p id="description">AL-WILDAN ISLAMIC SCHOOL 14 · BUMI MUTIARA</p>
  <label class="meta" for="floorSelect">PILIH LANTAI</label>
  <select id="floorSelect"><option value="all">Seluruh lantai</option><option value="1">Lantai 1</option><option value="2">Lantai 2</option><option value="3">Lantai 3</option></select>
  <div class="row"><button id="roofBtn">Atap: tampil</button><button id="labelsBtn">Label: ON</button></div>
@@ -80,13 +139,13 @@ const roomData={
 ]
 };
 
-const scene=new THREE.Scene();scene.background=new THREE.Color(0x9bc5df);scene.fog=new THREE.Fog(0x9bc5df,65,135);
-const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,250);camera.position.set(27,27,32);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0b0b09);scene.fog=new THREE.Fog(0x0b0b09,75,150);
+const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,250);camera.position.set(38,34,43);
 const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;document.getElementById("scene").appendChild(renderer.domElement);
 const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.target.set(0,3.5,0);controls.maxPolarAngle=Math.PI/2.02;controls.minDistance=9;controls.maxDistance=85;
 scene.add(new THREE.HemisphereLight(0xffffff,0x596b78,2.0));const sun=new THREE.DirectionalLight(0xffffff,2.5);sun.position.set(-18,35,22);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);scene.add(sun);
 const materials={
-ground:new THREE.MeshStandardMaterial({color:0x789b70}),class:new THREE.MeshStandardMaterial({color:0x82baf0}),facility:new THREE.MeshStandardMaterial({color:0x28cf58}),toilet:new THREE.MeshStandardMaterial({color:0xb8c2ca}),stair:new THREE.MeshStandardMaterial({color:0xf2b43f}),lobby:new THREE.MeshStandardMaterial({color:0xc9d1d4}),court:new THREE.MeshStandardMaterial({color:0x14bd3b}),wall:new THREE.MeshStandardMaterial({color:0xf0eee7}),roof:new THREE.MeshStandardMaterial({color:0x40576b,transparent:true,opacity:.88}),line:new THREE.MeshStandardMaterial({color:0xffffff})
+ground:new THREE.MeshStandardMaterial({color:0x29291f,roughness:1}),class:new THREE.MeshStandardMaterial({color:0x82baf0}),facility:new THREE.MeshStandardMaterial({color:0x28cf58}),toilet:new THREE.MeshStandardMaterial({color:0xb8c2ca}),stair:new THREE.MeshStandardMaterial({color:0xf2b43f}),lobby:new THREE.MeshStandardMaterial({color:0xc9d1d4}),court:new THREE.MeshStandardMaterial({color:0x14bd3b}),wall:new THREE.MeshStandardMaterial({color:0xf0eee7}),roof:new THREE.MeshStandardMaterial({color:0x8e352a,roughness:.9}),line:new THREE.MeshStandardMaterial({color:0xffffff})
 };
 const campus=new THREE.Group();scene.add(campus);const clickable=[],roofObjects=[],floorGroups={},labels=[];
 const SCALE=.035, CENTER_X=549,CENTER_Y=632, FLOOR_H=3.35;
@@ -118,7 +177,7 @@ function makeGableRoof(parent,cx,y,cz,w,d,name){
  const halfDepth=d/2;
  const slopeLength=Math.sqrt(halfDepth*halfDepth+rise*rise);
  const angle=Math.atan2(rise,halfDepth);
- const roofMaterial=new THREE.MeshStandardMaterial({color:0x354c60,roughness:.82,metalness:.04});
+ const roofMaterial=new THREE.MeshStandardMaterial({color:0x8f392d,roughness:.9,metalness:.02});
  const eaveY=y+2.02+rise/2;
  const front=box(roofGroup,0,eaveY,d/4,w+.28,.16,slopeLength,roofMaterial,name);
  front.rotation.x=angle;
@@ -174,7 +233,7 @@ for(let f=1;f<=3;f++){floorGroups[f]=new THREE.Group();campus.add(floorGroups[f]
  // Kanopi gerbang dibuat sebagai atap pelana kecil.
  const canopy=new THREE.Group();
  const rise=.42, half=1.0, slope=Math.sqrt(half*half+rise*rise), angle=Math.atan2(rise,half);
- const roofMat=new THREE.MeshStandardMaterial({color:0x354c60,roughness:.82});
+ const roofMat=new THREE.MeshStandardMaterial({color:0x8f392d,roughness:.9});
  const a=box(canopy,0,1.98,.5,gateWidth+.28,.14,slope,roofMat,"Atap Gerbang");
  a.rotation.x=angle;
  const b=box(canopy,0,1.98,-.5,gateWidth+.28,.14,slope,roofMat,"Atap Gerbang");
@@ -187,24 +246,63 @@ for(let f=1;f<=3;f++){floorGroups[f]=new THREE.Group();campus.add(floorGroups[f]
 }
 /* Pelat lantai transparan dihapus agar tidak membentuk bidang putih bertumpuk.
    Lantai ruang tetap dibentuk oleh permukaan masing-masing ruang. */
+function setObjectOpacity(root,opacity){
+ root.traverse(obj=>{
+   if(obj.isMesh){
+     if(!obj.userData.originalMaterial){
+       obj.userData.originalMaterial=Array.isArray(obj.material)
+         ? obj.material.map(m=>m.clone())
+         : obj.material.clone();
+     }
+     const original=obj.userData.originalMaterial;
+     const apply=m=>{
+       m.transparent=opacity<1;
+       m.opacity=opacity;
+       m.depthWrite=opacity>=0.95;
+       m.needsUpdate=true;
+     };
+     if(Array.isArray(original)){
+       obj.material=original.map(m=>m.clone());
+       obj.material.forEach(apply);
+     }else{
+       obj.material=original.clone();
+       apply(obj.material);
+     }
+     obj.raycast=opacity<0.95?()=>{}:THREE.Mesh.prototype.raycast;
+   }
+ });
+}
 function updateFloors(v){
- for(let f=1;f<=3;f++)floorGroups[f].visible=(v==="all"||Number(v)===f);
+ const selectedFloor=v==="all"?null:Number(v);
+ for(let f=1;f<=3;f++){
+   const opacity=selectedFloor===null||selectedFloor===f?1:0.14;
+   floorGroups[f].visible=true;
+   setObjectOpacity(floorGroups[f],opacity);
+ }
  roofObjects.forEach(o=>{
    const ownerFloor=Math.round((o.position.y-2.02)/FLOOR_H)+1;
-   o.visible=roofVisible&&(v==="all"||ownerFloor===Number(v));
+   const opacity=selectedFloor===null||selectedFloor===ownerFloor?1:0.14;
+   o.visible=roofVisible;
+   setObjectOpacity(o,opacity);
  });
  labels.forEach(label=>{
-   const ownerFloor=Math.round((label.position.y-2.25)/FLOOR_H)+1;
-   label.visible=labelsVisible&&(v==="all"||ownerFloor===Number(v));
+   const ownerFloor=Math.max(1,Math.min(3,Math.round((label.position.y-2.25)/FLOOR_H)+1));
+   const opacity=selectedFloor===null||selectedFloor===ownerFloor?1:0.16;
+   label.visible=labelsVisible;
+   label.material.transparent=opacity<1;
+   label.material.opacity=opacity;
+   label.material.depthWrite=opacity>=0.95;
+   label.material.needsUpdate=true;
  });
 }
 let roofVisible=true,labelsVisible=true,autoRotate=false,topView=false,selected=null;
 updateFloors("all");
+setMode("kawasan");
 document.getElementById("floorSelect").addEventListener("change",e=>{updateFloors(e.target.value);document.getElementById("title").textContent=e.target.value==="all"?"Seluruh Lantai":`Lantai ${e.target.value}`;document.getElementById("description").textContent="Pilih ruang pada model untuk melihat informasi dan jadwal kegiatan."});
 document.getElementById("roofBtn").onclick=()=>{roofVisible=!roofVisible;document.getElementById("roofBtn").textContent="Atap: "+(roofVisible?"tampil":"sembunyi");updateFloors(document.getElementById("floorSelect").value)};
 document.getElementById("labelsBtn").onclick=()=>{labelsVisible=!labelsVisible;labels.forEach(l=>l.visible=labelsVisible);document.getElementById("labelsBtn").textContent="Label: "+(labelsVisible?"ON":"OFF")};
 document.getElementById("topBtn").onclick=()=>{topView=!topView;if(topView){camera.position.set(0,43,.01)}else{camera.position.set(31,32,38)}controls.target.set(0,3.5,0);controls.update()};
-document.getElementById("resetBtn").onclick=()=>{camera.position.set(27,27,32);controls.target.set(0,3.5,0);controls.update();document.getElementById("floorSelect").value="all";updateFloors("all");roofVisible=true;roofObjects.forEach(o=>o.visible=true);document.getElementById("roofBtn").textContent="Atap: tampil";if(selected){selected.material.emissive?.setHex(0);selected=null}document.getElementById("title").textContent="AL-WILDAN DIGITAL CAMPUS";document.getElementById("description").textContent="Pilih lantai, lalu klik ruang pada model 3D untuk melihat informasi dan kegiatan."};
+document.getElementById("resetBtn").onclick=()=>{camera.position.set(27,27,32);controls.target.set(0,3.5,0);controls.update();document.getElementById("floorSelect").value="all";updateFloors("all");roofVisible=true;updateFloors(document.getElementById("floorSelect").value);document.getElementById("roofBtn").textContent="Atap: tampil";if(selected){selected.material.emissive?.setHex(0);selected=null}document.getElementById("title").textContent="AL-WILDAN DIGITAL CAMPUS";document.getElementById("description").textContent="Pilih lantai, lalu klik ruang pada model 3D untuk melihat informasi dan kegiatan."};
 document.getElementById("rotateBtn").onclick=()=>{autoRotate=!autoRotate;document.getElementById("rotateBtn").textContent="Putar otomatis: "+(autoRotate?"ON":"OFF")};
 document.getElementById("zoomIn").onclick=()=>camera.position.sub(controls.target).multiplyScalar(.88).add(controls.target);
 document.getElementById("zoomOut").onclick=()=>camera.position.sub(controls.target).multiplyScalar(1.12).add(controls.target);
@@ -216,6 +314,63 @@ function valueOf(row,keys){for(const k of keys){if(row[k]!==undefined&&row[k]!==
 function showActivities(roomName){const list=document.getElementById("activityList");list.innerHTML="";const matches=scheduleRows.filter(r=>{const loc=valueOf(r,["location","room","room_name","ruang","lokasi","location_name"]);return loc.toLowerCase()===roomName.toLowerCase()||loc.toLowerCase().includes(roomName.toLowerCase())||roomName.toLowerCase().includes(loc.toLowerCase())&&loc.length>2});if(!matches.length){const li=document.createElement("li");li.textContent="Belum ada jadwal yang cocok untuk ruang ini pada data yang berhasil dibaca.";list.appendChild(li);return}matches.forEach(r=>{const li=document.createElement("li");const act=valueOf(r,["activity","activity_name","program","subject","kegiatan","name"])||"Kegiatan";const cls=valueOf(r,["class","class_name","kelas","group"]);const day=valueOf(r,["day","day_name","hari"]);const time=valueOf(r,["time","time_range","jam","start_time"]);li.textContent=[act,cls,day,time].filter(Boolean).join(" · ");list.appendChild(li)})}
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 renderer.domElement.addEventListener("click",e=>{const rect=renderer.domElement.getBoundingClientRect();pointer.x=((e.clientX-rect.left)/rect.width)*2-1;pointer.y=-((e.clientY-rect.top)/rect.height)*2+1;raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(clickable,false);if(!hits.length)return;const obj=hits[0].object,name=obj.userData.roomName||"Ruang";if(selected)selected.material.emissive?.setHex(0);selected=obj;selected.material.emissive?.setHex(0x244466);document.getElementById("title").textContent=name;document.getElementById("description").textContent="Ruang dipilih pada model 3D. Informasi aktivitas ditampilkan jika tersedia pada database jadwal.";showActivities(name)});
+
+
+// Navigasi referensi: Kawasan, Gedung, Per lantai, Ruang kelas.
+let campusMode="kawasan", tourOn=false, navStep=0;
+const modeButtons=[...document.querySelectorAll(".tab")];
+const modeTitle=document.getElementById("siteTitle");
+function setMode(mode){
+ campusMode=mode;
+ modeButtons.forEach(b=>b.classList.toggle("active",b.dataset.mode===mode));
+ const floorSelect=document.getElementById("floorSelect");
+ const infoPanel=document.getElementById("infoPanel");
+ const panelToggle=document.getElementById("panelToggle");
+ if(mode==="kawasan"){
+   floorSelect.value="all";updateFloors("all");
+   modeTitle.textContent="Kawasan sekolah";
+   document.getElementById("title").textContent="Kawasan sekolah";
+   document.getElementById("description").textContent="AL-WILDAN ISLAMIC SCHOOL 14 · BUMI MUTIARA";
+   camera.position.set(38,34,43);controls.target.set(0,3.5,0);
+   infoPanel.classList.add("is-hidden");panelToggle.textContent="Buka info ☰";
+   panelToggle.setAttribute("aria-expanded","false");
+ }else if(mode==="gedung"){
+   floorSelect.value="all";updateFloors("all");
+   modeTitle.textContent="Gedung sekolah";
+   camera.position.set(27,25,30);controls.target.set(0,4,0);
+   infoPanel.classList.remove("is-hidden");panelToggle.textContent="Tutup info ×";
+   panelToggle.setAttribute("aria-expanded","true");
+ }else if(mode==="lantai"){
+   modeTitle.textContent="Tampilan per lantai";
+   floorSelect.value="1";updateFloors("1");
+   camera.position.set(31,29,35);controls.target.set(0,3.5,0);
+   infoPanel.classList.remove("is-hidden");panelToggle.textContent="Tutup info ×";
+   panelToggle.setAttribute("aria-expanded","true");
+ }else{
+   modeTitle.textContent="Ruang kelas";
+   floorSelect.value="1";updateFloors("1");
+   camera.position.set(24,22,27);controls.target.set(0,3.5,0);
+   infoPanel.classList.remove("is-hidden");panelToggle.textContent="Tutup info ×";
+   panelToggle.setAttribute("aria-expanded","true");
+ }
+ controls.update();
+}
+modeButtons.forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
+document.getElementById("tourBtn").onclick=()=>{
+ tourOn=!tourOn;autoRotate=tourOn;
+ document.getElementById("tourBtn").innerHTML=tourOn?'<span>■</span> Hentikan Tur':'<span>▶</span> Putar Tur';
+ document.getElementById("rotateBtn").textContent="Putar otomatis: "+(autoRotate?"ON":"OFF");
+};
+document.getElementById("navPrev").onclick=()=>{
+ navStep=(navStep+3)%4;
+ const positions=[[38,34,43],[43,27,25],[-35,29,38],[0,43,0]];
+ camera.position.set(...positions[navStep]);controls.update();
+};
+document.getElementById("navNext").onclick=()=>{
+ navStep=(navStep+1)%4;
+ const positions=[[38,34,43],[43,27,25],[-35,29,38],[0,43,0]];
+ camera.position.set(...positions[navStep]);controls.update();
+};
 
 // Panel informasi dapat ditutup untuk memberi ruang lebih luas pada tampilan 3D.
 const infoPanel=document.getElementById("infoPanel");
